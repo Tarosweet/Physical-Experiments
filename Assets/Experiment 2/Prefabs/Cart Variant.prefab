@@ -1397,7 +1397,7 @@ PrefabInstance:
     - target: {fileID: 369593149750519915, guid: 3cc8a1f1694499d438a340c1718eaf61,
         type: 3}
       propertyPath: m_Name
-      value: Cart
+      value: Cart Variant
       objectReference: {fileID: 0}
     - target: {fileID: 375018261918413691, guid: 3cc8a1f1694499d438a340c1718eaf61,
         type: 3}
@@ -1459,7 +1459,8 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4668479684143502372, guid: 3cc8a1f1694499d438a340c1718eaf61, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3cc8a1f1694499d438a340c1718eaf61, type: 3}
 --- !u!1 &7362425062604753561 stripped
 GameObject:
