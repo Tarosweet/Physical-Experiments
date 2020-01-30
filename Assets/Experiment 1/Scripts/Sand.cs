@@ -20,8 +20,6 @@ public class Sand : MonoBehaviour
         if (!rigidbodyInSand)
             return;
         
-        Debug.Log("Object in the sand");
-        
         StopRigidbody(rigidbodyInSand);
     }
 
@@ -32,5 +30,7 @@ public class Sand : MonoBehaviour
             Mathf.Clamp(rigidbody.velocity.z - strength,0,10));
 
         rigidbody.velocity = newVelocity;
+        
+        Debug.Log("Velocity: " + newVelocity);
     }
 }
