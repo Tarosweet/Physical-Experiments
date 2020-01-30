@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 375018261918413691}
   - component: {fileID: 425380837400258597}
   - component: {fileID: 2018068604201196422}
+  - component: {fileID: 4668479684143502372}
   m_Layer: 0
   m_Name: Cart
   m_TagString: Untagged
@@ -239,7 +240,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!65 &2018068604201196422
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -251,8 +252,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.73, z: 4.48}
+  m_Size: {x: 1.24, y: 3.04, z: 5.16}
   m_Center: {x: 0, y: 0.37, z: -0.33}
+--- !u!114 &4668479684143502372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369593149750519915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba3953e9190884580d0479ca3a011f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
 --- !u!1 &369691750885549171
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375253575252320055}
   - component: {fileID: 514478388761982623}
+  - component: {fileID: 8311566387080436371}
   m_Layer: 0
   m_Name: _LeftRearWheelCollider
   m_TagString: Untagged
@@ -376,6 +391,19 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!135 &8311566387080436371
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369829573096200223}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &370192092579272189
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 372652944844155805}
   - component: {fileID: 516850339245701577}
+  - component: {fileID: 7610687481382065776}
   m_Layer: 0
   m_Name: _RightFrontWheelCollider
   m_TagString: Untagged
@@ -468,6 +497,19 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!135 &7610687481382065776
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370210298681549979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &370258544420957241
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375359145080996309}
   - component: {fileID: 514472375005492249}
+  - component: {fileID: 6540285489071522210}
   m_Layer: 0
   m_Name: _LeftFrontWheelCollider
   m_TagString: Untagged
@@ -529,6 +572,19 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!135 &6540285489071522210
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370258544420957241}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &370265053855542013
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +852,7 @@ GameObject:
   m_Component:
   - component: {fileID: 372439960414581175}
   - component: {fileID: 517692347767144787}
+  - component: {fileID: 5136876319757108915}
   m_Layer: 0
   m_Name: _RightRearWheelCollider
   m_TagString: Untagged
@@ -847,6 +904,19 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!135 &5136876319757108915
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371238202312802289}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3532989893937068431
 GameObject:
   m_ObjectHideFlags: 0
