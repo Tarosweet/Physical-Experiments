@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RetryButton : MonoBehaviour
+public class ExperimentUI : MonoBehaviour
 {
     public void Retry()
     {
@@ -16,5 +16,16 @@ public class RetryButton : MonoBehaviour
         experimentSpawner.DestroyPrefab();
         
         experimentSpawner.SpawnPrefab(indexExperiment);
+    }
+
+    public void BackToExperimentSelection()
+    {
+        SpawnManager experimentSpawner = GameObject.Find("Experiment Manager").GetComponent<SpawnManager>();
+        SpawnManager stageSpawner = FindObjectOfType<SpawnManager>();
+        
+        stageSpawner.DestroyPrefab();
+        experimentSpawner.DestroyPrefab();
+        
+        FindObjectOfType<UI>().SetUI(true);
     }
 }

@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619187126862498262}
   m_LocalRotation: {x: -0, y: -0, z: -0.30333734, w: 0.9528833}
-  m_LocalPosition: {x: -3.13, y: -0.054, z: -0.01}
-  m_LocalScale: {x: 2.1762002, y: 1, z: 2.0872}
+  m_LocalPosition: {x: -2.94, y: 0.22, z: -0.01}
+  m_LocalScale: {x: 2.1762002, y: 0.23733555, z: 2.0872}
   m_Children: []
   m_Father: {fileID: 2619187127716609492}
   m_RootOrder: 0
@@ -118,8 +118,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619187127603305732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8699999, y: -0.35, z: 0}
-  m_LocalScale: {x: 5.9120827, y: 0.18723, z: 2.0872}
+  m_LocalPosition: {x: 3.986, y: -0.35, z: -0}
+  m_LocalScale: {x: 12.145167, y: 0.18723, z: 2.0872}
   m_Children: []
   m_Father: {fileID: 2619187127716609492}
   m_RootOrder: 1
@@ -274,6 +274,7 @@ MonoBehaviour:
     exist: 0
   position: {x: -1, y: -0.33, z: 0}
   optionalRoot: {fileID: 0}
+  currentIndex: 0
 --- !u!1001 &2857749997089862054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -555,7 +556,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3530662106413168778}
+      objectReference: {fileID: 8530259536171854921}
     - target: {fileID: 1557011075072376683, guid: 5b4af9abad9b8b54aba427c857f3d33a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -566,6 +567,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7905308957201332224, guid: 5b4af9abad9b8b54aba427c857f3d33a,
+        type: 3}
+      propertyPath: text
+      value: Select an obstacle in the left part of the screen and start the cart
+        by clicking on it
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b4af9abad9b8b54aba427c857f3d33a, type: 3}
 --- !u!224 &5776377623855622469 stripped
@@ -574,9 +581,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8356286606295214789}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3530662106413168778 stripped
+--- !u!114 &8530259536171854921 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4830128329361510991, guid: 5b4af9abad9b8b54aba427c857f3d33a,
+  m_CorrespondingSourceObject: {fileID: 402772821639284364, guid: 5b4af9abad9b8b54aba427c857f3d33a,
     type: 3}
   m_PrefabInstance: {fileID: 8356286606295214789}
   m_PrefabAsset: {fileID: 0}

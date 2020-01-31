@@ -28,8 +28,11 @@ public class LineRenderConnector : MonoBehaviour, IInteractable
         elasticPlate.PlayUnbendAnimation();
 
         Destroy(gameObject);
+
+        NearCartChecker checker = FindObjectOfType<NearCartChecker>();
         
-        FindObjectOfType<NearCartChecker>().PhysicsSimulation();
+        if (checker)
+            checker.PhysicsSimulation();
     }
     
     private void DrawLine()

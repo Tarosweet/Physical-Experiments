@@ -24,7 +24,7 @@ public class NearCartChecker : MonoBehaviour
 
     private bool IsCartNear()
     {
-        if (!(carts[0].cartRb || carts[1].cartRb))
+        if ((!carts[0].cartRb || !carts[1].cartRb))
             return false;
         
         return Vector3.Distance(carts[0].cartRb.position, carts[1].cartRb.position) > maxDistance;
