@@ -26785,6 +26785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1489500058678713530}
   - component: {fileID: 1489500058678713531}
+  - component: {fileID: 301886238087500248}
   m_Layer: 0
   m_Name: Experiment 4_1
   m_TagString: Untagged
