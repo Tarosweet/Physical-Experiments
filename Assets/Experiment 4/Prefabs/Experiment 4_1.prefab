@@ -26785,7 +26785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1489500058678713530}
   - component: {fileID: 1489500058678713531}
-  - component: {fileID: 301886238087500248}
+  - component: {fileID: 1746395467503011962}
   m_Layer: 0
   m_Name: Experiment 4_1
   m_TagString: Untagged
@@ -26824,6 +26824,19 @@ MonoBehaviour:
   - {fileID: 1489500058510050276}
   - {fileID: 1489500058437858951}
   - {fileID: 1489500057503083761}
+--- !u!65 &1746395467503011962
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489500058678713529}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.67, z: 1}
+  m_Center: {x: 0, y: 2.57, z: 0}
 --- !u!1 &3820293572982141480
 GameObject:
   m_ObjectHideFlags: 0
