@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BalloonInTheBox : MonoBehaviour, IObjectExperement
+public class BalloonInTheBox : MonoBehaviour, IObjectExperiment
 {
     [SerializeField] private Transform _transform;
     [SerializeField] private float _speedPosition;
     [SerializeField] private float _speedRotation;
     [SerializeField] private float _speedScale;
     private bool _isEnd = false;
-    private bool _isPlay = false;
     private Vector3 _endPosition = new Vector3(-0.007f,0.39f,0.002f);
     private Vector3 _endRotation = Vector3.zero;
     private Vector3 _endScale = Vector3.one;
@@ -25,8 +24,8 @@ public class BalloonInTheBox : MonoBehaviour, IObjectExperement
 
     private IEnumerator TransformBalloon(Vector3 position, Vector3 rotation, Vector3 scale, bool endFlag)
     {
-        _isPlay = true;
-        while (_isPlay)
+        bool isPlay = true;
+        while (isPlay)
         {
             _transform.localPosition =
                 Vector3.MoveTowards(_transform.localPosition, position, Time.deltaTime * _speedPosition);
@@ -42,7 +41,7 @@ public class BalloonInTheBox : MonoBehaviour, IObjectExperement
                 _transform.localRotation = Quaternion.Euler(rotation);
                 _transform.localScale = scale;
                 _isEnd = endFlag;
-                _isPlay = false;
+                isPlay = false;
             }
             yield return new WaitForSeconds(0);
         }
@@ -56,10 +55,5 @@ public class BalloonInTheBox : MonoBehaviour, IObjectExperement
     public bool IsEnd()
     {
         return _isEnd;
-    }
-
-    public bool IsPlay()
-    {
-        return _isPlay;
     }
 }

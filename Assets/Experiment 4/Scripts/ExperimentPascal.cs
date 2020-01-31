@@ -3,21 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperementBalloon : MonoBehaviour
+public class ExperimentPascal : MonoBehaviour, IInteractable
 {
     [SerializeField] private List<GameObject> _objectsExperement;
     private bool _isPlay;
     private bool _isEnd;
 
-    private void Update()
+    public void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
+        {
             Play();
-        if(Input.GetMouseButtonDown(1))
+        }
+        
+        if (Input.GetMouseButton(1))
+        {
             Back();
+        }
+
     }
 
-    //TODO заменить на метод интерфейса
     public void Play()
     {
         if (!_isPlay && !_isEnd)
@@ -38,16 +43,17 @@ public class ExperementBalloon : MonoBehaviour
 
     private IEnumerator PlayWithDuration()
     {
-        List<IObjectExperement> objectExperements = GetObjectsExperement();
+        List<IObjectExperiment> objectExperements = GetObjectsExperiment();
 
-        foreach (IObjectExperement objectExperement in objectExperements)
+        objectExperements[1].Play();
+        objectExperements[2].Play();
+
+        while (!objectExperements[1].IsEnd())
         {
-            objectExperement.Play();
-            while (!objectExperement.IsEnd())
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
+            yield return new WaitForSeconds(0.1f);
         }
+        objectExperements[0].Back();
+        objectExperements[2].Back();
 
         _isPlay = false;
         _isEnd = true;
@@ -55,9 +61,9 @@ public class ExperementBalloon : MonoBehaviour
 
     private IEnumerator BackWithDuration()
     {
-        List<IObjectExperement> objectExperements = GetObjectsExperement();
+        List<IObjectExperiment> objectExperements = GetObjectsExperiment();
 
-        foreach (IObjectExperement objectExperement in objectExperements)
+        foreach (IObjectExperiment objectExperement in objectExperements)
         {
             objectExperement.Back();
             while (objectExperement.IsEnd())
@@ -65,20 +71,25 @@ public class ExperementBalloon : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        objectExperements[0].Play();
 
         _isPlay = false;
         _isEnd = false;
     }
 
-    private List<IObjectExperement> GetObjectsExperement()
+    private List<IObjectExperiment> GetObjectsExperiment()
     {
-        List<IObjectExperement> objectExperements = new List<IObjectExperement>();
+        List<IObjectExperiment> objectExperements = new List<IObjectExperiment>();
         
         foreach (GameObject gameObject in _objectsExperement)
         {
-            objectExperements.Add(gameObject.GetComponent<IObjectExperement>());
+            objectExperements.Add(gameObject.GetComponent<IObjectExperiment>());
         }
 
         return objectExperements;
+    }
+    public void Click()
+    {
+        Play();
     }
 }

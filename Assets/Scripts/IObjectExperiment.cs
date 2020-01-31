@@ -1,8 +1,7 @@
 ﻿
-public interface IObjectExperement
+public interface IObjectExperiment
 {
     void Play();
     void Back();
     bool IsEnd();
-    bool IsPlay();
 }
