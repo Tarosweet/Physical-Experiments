@@ -9,20 +9,6 @@ public class ExperimentPascal : MonoBehaviour, IInteractable
     private bool _isPlay;
     private bool _isEnd;
 
-    public void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Play();
-        }
-        
-        if (Input.GetMouseButton(1))
-        {
-            Back();
-        }
-
-    }
-
     public void Play()
     {
         if (!_isPlay && !_isEnd)
