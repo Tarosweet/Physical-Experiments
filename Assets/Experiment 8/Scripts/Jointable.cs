@@ -7,7 +7,7 @@ public class Jointable : MonoBehaviour
 {
     public Rigidbody rb;
     public HingeJoint joint;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var joint = other.GetComponent<HookJoint>();
@@ -21,5 +21,15 @@ public class Jointable : MonoBehaviour
     private void Connect(HookJoint to)
     {
         joint.connectedBody = to.rb;
+    }
+
+    public void Unconnect()
+    {
+        joint.connectedBody = null;
+    }
+
+    public bool IsConnected()
+    {
+        return joint.connectedBody;
     }
 }
