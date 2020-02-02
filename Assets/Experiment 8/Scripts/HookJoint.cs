@@ -6,32 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class HookJoint : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
+    public Rigidbody rb;
 
-    void Update()
+    private void Start()
     {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Hook"))
-            Joint(other.gameObject);
-            
-    }
-
-    private void Joint(GameObject to)
-    {
-        HingeJoint joint = to.AddComponent<HingeJoint>();
-        InitializeJoint(joint);
-    }
-
-    private void InitializeJoint(HingeJoint joint)
-    {
-        joint.connectedBody = GetComponent<Rigidbody>();
+      //  joint = GetComponent<HingeJoint>();
+       // rb = GetComponent<Rigidbody>();
     }
 }
