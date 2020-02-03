@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JointController : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     [SerializeField] private Jointable jointable;
 
@@ -18,13 +18,14 @@ public class JointController : MonoBehaviour
     {
         rb.isKinematic = true;
         
-        if(jointable.IsConnected())
+        if(jointable.isConnected)
             jointable.Unconnect();
     }
 
     private void OnMouseUp()
     {
-        if (jointable.IsConnected())  // если нужно, чтобы грузики падали когда они не прикреплены = убрать условие
+        if (jointable.isConnected)  // если нужно, чтобы грузики падали когда они не прикреплены = убрать условие
             rb.isKinematic = false;
     }
+    
 }

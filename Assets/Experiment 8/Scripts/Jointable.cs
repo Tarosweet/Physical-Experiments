@@ -7,29 +7,35 @@ public class Jointable : MonoBehaviour
 {
     public Rigidbody rb;
     public HingeJoint joint;
-    
+
+    public bool isConnected;
+
     private void OnTriggerEnter(Collider other)
     {
-        var joint = other.GetComponent<HookJoint>();
+        var enteredJoint = other.GetComponent<HookJoint>();
             
-        if (!joint)
-            return;
+        if (!enteredJoint)
+           return;
         
-        Connect(joint);
+        Connect(enteredJoint);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Unconnect();
     }
 
     private void Connect(HookJoint to)
     {
         joint.connectedBody = to.rb;
+        rb.isKinematic = false;
+        isConnected = true;
     }
 
     public void Unconnect()
     {
         joint.connectedBody = null;
-    }
-
-    public bool IsConnected()
-    {
-        return joint.connectedBody;
+        rb.isKinematic = true;
+        isConnected = false;
     }
 }
