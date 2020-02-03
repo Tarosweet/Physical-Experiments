@@ -18,14 +18,17 @@ public class JointController : MonoBehaviour
     {
         rb.isKinematic = true;
         
+        
         if(jointable.isConnected)
-            jointable.Unconnect();
+            jointable.Unbend();
     }
 
     private void OnMouseUp()
     {
         if (jointable.isConnected)  // если нужно, чтобы грузики падали когда они не прикреплены = убрать условие
             rb.isKinematic = false;
+
+        jointable.isConnected = false;
     }
     
 }
