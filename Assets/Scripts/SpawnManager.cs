@@ -9,7 +9,6 @@ public class SpawnManager : MonoBehaviour
     private struct Experiment
     {
          public GameObject prefab;
-         public GameObject uiPrefab;
         [HideInInspector] public bool exist;
     }
 
@@ -30,8 +29,7 @@ public class SpawnManager : MonoBehaviour
 
         if (prefabs[index].prefab)
             currentPrefab.prefab = Instantiate(prefabs[index].prefab, position, Quaternion.identity);
-        if (prefabs[index].uiPrefab) 
-                currentPrefab.uiPrefab = Instantiate(prefabs[index].uiPrefab);
+
 
         currentPrefab.exist = true;
         currentIndex = index;
@@ -43,7 +41,6 @@ public class SpawnManager : MonoBehaviour
     public void DestroyPrefab()
     {
         Destroy(currentPrefab.prefab);
-        Destroy(currentPrefab.uiPrefab);
 
         currentPrefab.exist = false;
     }
