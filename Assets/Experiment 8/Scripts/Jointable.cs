@@ -36,24 +36,14 @@ public class Jointable : MonoBehaviour
     {
         if (isConnected)
             return;
-        
-        
+
         joint.connectedBody = to.rb;
-        rb.isKinematic = false;
-        isConnected = true;
-
-        joint.connectedAnchor = to.transform.localPosition;
-        joint.anchor = transform.localPosition;
         
-        _refreshRotation.IsRotating = false;
+        EnablePhysics(true);
 
-      /*  if (to.transform.parent.GetComponent<HingeJoint>().axis.x == 0)
-            joint.axis = new Vector3(1,1);
-        else
-        {
-            joint.axis = new Vector3(0,1);
-        } */
-
+        SetAnchorPositionsForHingeJoint(to);
+        
+        Rotate(false);
     }
 
     public void Unbend()
@@ -62,9 +52,27 @@ public class Jointable : MonoBehaviour
             return;
         
         joint.connectedBody = null;
-        rb.isKinematic = true;
-        isConnected = false;
         
-        _refreshRotation.IsRotating = true;
+        EnablePhysics(false);
+        
+        Rotate(true);
+    }
+
+    private void EnablePhysics(bool value)
+    {
+        rb.isKinematic = !value;
+        isConnected = value;
+    }
+    
+    private void SetAnchorPositionsForHingeJoint(HookJoint to)
+    {
+        joint.connectedAnchor = to.transform.localPosition;
+        joint.anchor = transform.localPosition;
+    }
+
+    private void Rotate(bool value)
+    {
+        if (_refreshRotation)
+            _refreshRotation.IsRotating = value;
     }
 }
