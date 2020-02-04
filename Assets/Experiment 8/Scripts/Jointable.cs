@@ -12,6 +12,8 @@ public class Jointable : MonoBehaviour
 
     private RefreshRotation _refreshRotation;
 
+    [SerializeField] private bool spring = false;
+
     private void Start()
     {
         _refreshRotation = transform.parent.GetComponent<RefreshRotation>();
@@ -29,7 +31,12 @@ public class Jointable : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-          Unbend();
+        var exitedJoint = other.GetComponent<HookJoint>();
+            
+        if (!exitedJoint)
+            return;
+        
+        Unbend();
     }
 
     private void Bend(HookJoint to)
@@ -44,6 +51,9 @@ public class Jointable : MonoBehaviour
         SetAnchorPositionsForHingeJoint(to);
         
         Rotate(false);
+        
+        ReloadCollider();
+        
     }
 
     public void Unbend()
@@ -56,6 +66,16 @@ public class Jointable : MonoBehaviour
         EnablePhysics(false);
         
         Rotate(true);
+    }
+
+    private void ReloadCollider()
+    {
+        if (!spring)
+            return;
+        
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        sphereCollider.enabled = false;
+        sphereCollider.enabled = true;
     }
 
     private void EnablePhysics(bool value)
