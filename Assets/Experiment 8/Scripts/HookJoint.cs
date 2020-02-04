@@ -7,4 +7,5 @@ using UnityEngine;
 public class HookJoint : MonoBehaviour
 {
     public Rigidbody rb;
+    public Rigidbody connectedBody;
 }

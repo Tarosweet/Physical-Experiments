@@ -14,9 +14,12 @@ public class Jointable : MonoBehaviour
 
     [SerializeField] private bool spring = false;
 
+    private MassMarker marker;
+
     private void Start()
     {
         _refreshRotation = transform.parent.GetComponent<RefreshRotation>();
+        marker = FindObjectOfType<MassMarker>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,7 +39,7 @@ public class Jointable : MonoBehaviour
         if (!exitedJoint)
             return;
         
-        Unbend();
+        Unbend(exitedJoint);
     }
 
     private void Bend(HookJoint to)
@@ -45,6 +48,8 @@ public class Jointable : MonoBehaviour
             return;
 
         joint.connectedBody = to.rb;
+
+        to.connectedBody = rb;
         
         EnablePhysics(true);
 
@@ -54,18 +59,25 @@ public class Jointable : MonoBehaviour
         
         ReloadCollider();
         
+        marker.CalculateGeneralMass();
+
     }
 
-    public void Unbend()
+    public void Unbend(HookJoint from)
     {
         if (!isConnected)
             return;
         
         joint.connectedBody = null;
-        
-        EnablePhysics(false);
+
+        from.connectedBody = null;
+
+        EnablePhysics(false);  //TODO отцепить все грузики в цепи
         
         Rotate(true);
+        
+        marker.CalculateGeneralMass();
+
     }
 
     private void ReloadCollider()
