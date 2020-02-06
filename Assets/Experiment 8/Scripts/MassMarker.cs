@@ -16,9 +16,10 @@ public class MassMarker : MonoBehaviour
     [SerializeField] private HookJoint root;
 
     private float mass;
-    
-    
-    
+
+    [SerializeField] private ConclusionButton _conclusionButton;
+
+
     public void CalculateGeneralMass()
     {
         mass = GetMass();
@@ -38,12 +39,20 @@ public class MassMarker : MonoBehaviour
             connectedBody = connectedBody.transform.Find("Hook").GetComponent<HookJoint>().connectedBody;
 
             i++;
+            
+            _conclusionButton.SetButtonState(IsConclusionButtonAvailable(i));
+            
             newFormula += GetFormula(i);
         }
 
         formula = newFormula;
 
         return newMass;
+    }
+
+    private bool IsConclusionButtonAvailable(int weightsCount)
+    {
+        return weightsCount >= 2;
     }
 
     private void ShowOnUI()
@@ -65,5 +74,10 @@ public class MassMarker : MonoBehaviour
             newFormula += "+";
         newFormula += f + index.ToString();
          return newFormula;
+    }
+
+    public void InverseActive(GameObject go)
+    {
+        go.SetActive(!go.activeSelf);
     }
 }

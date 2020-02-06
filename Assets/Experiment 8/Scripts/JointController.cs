@@ -27,7 +27,7 @@ public class JointController : MonoBehaviour
     private void OnMouseUp()
     {
         if (jointable.isConnected)  // если нужно, чтобы грузики падали когда они не прикреплены = убрать условие
-            rb.isKinematic = false;    
+            rb.isKinematic = false;    //TODO отцепить все грузики в цепи
         else
         {
             thisTransform.position = startPosition;
