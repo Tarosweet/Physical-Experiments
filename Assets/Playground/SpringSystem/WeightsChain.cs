@@ -43,13 +43,13 @@ public class WeightsChain : MonoBehaviour, IHavingMass
 
     public void Remove(JointsContainer jointsContainer)
     {
-        WeightsChain splittedChain = SplitChain(this, containers.IndexOf(jointsContainer));
+        WeightsChain splittedChain = SplitChain(this, jointsContainer);
 
-        if (containers.Count <= 1)
+       /* if (containers.Count <= 1)
         {
             RemoveChain(jointsContainer._weightsChain);
             RemoveChain(this);
-        }
+        } */
     }
     
     private WeightsChain SplitChain(WeightsChain chain, int index)
@@ -62,9 +62,37 @@ public class WeightsChain : MonoBehaviour, IHavingMass
         }
         
         chain.containers.RemoveRange(0, index + 1);
+        
 
         return ChainSpawner.CreateChain(jointsContainers);
     }
+    
+    private WeightsChain SplitChain(WeightsChain chain, JointsContainer splitterContainer)
+    {
+        JointsContainer container = splitterContainer;
+
+        return ChainSpawner.CreateChain( SplitRecursively(container));
+    }
+
+    private List<JointsContainer> SplitRecursively(JointsContainer fromContainer)
+    {
+        List<JointsContainer> jointsContainers = new List<JointsContainer>();
+        
+        while (fromContainer)
+        {
+            jointsContainers.Add(fromContainer);
+            containers.Remove(fromContainer);
+            
+            if (fromContainer.hook.currentMount)
+            {
+                fromContainer = fromContainer.hook.currentMount.jointsContainer;
+            }
+            else fromContainer = null;
+        }
+
+        return jointsContainers;
+    }
+    
 
     private void RemoveChain(WeightsChain chain)
     {

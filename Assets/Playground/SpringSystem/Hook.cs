@@ -11,9 +11,21 @@ public class Hook : MonoBehaviour
 
     public JointsContainer jointsContainer;
 
+    public Mount currentMount;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void BeDisconnect()
+    {
+        currentMount = null;
+    }
+
+    public bool IsAttached()
+    {
+        return currentMount;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,6 +34,16 @@ public class Hook : MonoBehaviour
 
         if (!mount)
             return;
+        
+        if (mount.IsAttached())
+            return;
+        
+        BeConnect(mount);
+    }
+
+    private void BeConnect(Mount mount)
+    {
+        currentMount = mount;
         
         mount.Connect(jointsContainer);
     }

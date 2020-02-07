@@ -12,6 +12,8 @@ public class Mount : MonoBehaviour
 
     public JointsContainer jointsContainer;
 
+    private Hook currentHook;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -22,8 +24,13 @@ public class Mount : MonoBehaviour
         if (IsAttached())
             return;
         
-        _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody);
+        if (!IsNotSelf(hookJointsContainer))
+            return;
 
+        _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody); //TODO кинематик убирать у пружины
+
+        currentHook = hookJointsContainer.hook;
+        
         ChainResolver.Resolve(jointsContainer, hookJointsContainer);
     }
 
@@ -31,14 +38,19 @@ public class Mount : MonoBehaviour
     {
         if (!IsAttached())
             return;
-
+        
         Destroy(_hingeJoint);
         
         if(jointsContainer.IsStaticMount())
             return;
 
         if (jointsContainer._weightsChain)
+        {
             jointsContainer._weightsChain.Remove(jointsContainer);
+            
+            currentHook.BeDisconnect();
+            currentHook = null;
+        }
     }
 
     public Rigidbody GetConnectedBody()
@@ -58,5 +70,10 @@ public class Mount : MonoBehaviour
         joint.connectedBody = connectedBody;
 
         return joint;
+    }
+
+    private bool IsNotSelf(JointsContainer container)
+    {
+        return container != this.jointsContainer;
     }
 }

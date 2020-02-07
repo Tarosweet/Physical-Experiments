@@ -4,36 +4,25 @@ using Playground.SpringSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class JointsContainer : MonoBehaviour , IHavingMass
+public class JointsContainer : MonoBehaviour, IHavingMass
 {
-    public Mount mount;  //TODO interface GetRigidbody? list<Rb>?
+    public Mount mount; //TODO interface GetRigidbody? list<Rb>?
     public Hook hook;
 
     public Rigidbody rigidbody;
 
     public WeightsChain _weightsChain;
-    
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        
-        if (mount)
-        {
-            CreateFixedJoint(mount.rigidbody);
-        }
-        else
-        {
-            Debug.LogWarning("Joint container doesnt have mount");
-        }
-        
-        CreateFixedJoint(hook.rigidbody);
     }
-    
+
     public float GetMass()
     {
         return rigidbody.mass;
     }
-    
+
     public bool IsChainExist()
     {
         return _weightsChain;
@@ -54,11 +43,9 @@ public class JointsContainer : MonoBehaviour , IHavingMass
         return mount.IsAttached();
     }
 
-    private FixedJoint CreateFixedJoint(Rigidbody connectedBody)
+    public bool IsHaveAttaches()
     {
-        FixedJoint fixedJoint = gameObject.AddComponent<FixedJoint>();
-        fixedJoint.connectedBody = connectedBody;
-
-        return fixedJoint;
+       return hook.IsAttached();
     }
+
 }

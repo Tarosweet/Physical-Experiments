@@ -23,11 +23,17 @@ public class TransformZeroing : MonoBehaviour
         Save();
     }
 
-    private void OnMouseUp() //вынести в другой класс
+    private void OnMouseUp() //TODO вынести в другой класс
     {
-        if (_jointController.IsAttached()) 
+        if (_jointController.IsAttached())
+        {
+            _jointController.rigidbody.isKinematic = false;
             return;
-       
+        }
+        
+        if (_jointController.IsHaveAttaches())
+            return;
+
         Load();
 
         _jointController.rigidbody.isKinematic = true;
