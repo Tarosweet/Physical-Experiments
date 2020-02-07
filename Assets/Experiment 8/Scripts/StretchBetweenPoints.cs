@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spring : MonoBehaviour
+public class StretchBetweenPoints : MonoBehaviour
 {
     private Transform springTransform;
 
-    [SerializeField] private Transform firstPointTransform;
-    [SerializeField] private Transform secondPointTransform;
+    public Transform firstPointTransform;
+    public Transform secondPointTransform;
 
     [SerializeField] private float XZScale;
     
@@ -18,10 +18,13 @@ public class Spring : MonoBehaviour
     
     void Update()
     {
-        StretchBetweenPoints(firstPointTransform.position,secondPointTransform.position);
+        if (!firstPointTransform || !secondPointTransform)
+            return;
+        
+        Stretch(firstPointTransform.position,secondPointTransform.position);
     }
 
-    private void StretchBetweenPoints(Vector3 firstPoint, Vector3 secondPoint)
+    private void Stretch(Vector3 firstPoint, Vector3 secondPoint)
     {
         float distance = Vector3.Distance(firstPoint, secondPoint); //Change Scale
         springTransform.localScale = new Vector3(XZScale, XZScale, distance);
