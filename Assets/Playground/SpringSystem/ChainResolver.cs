@@ -12,21 +12,21 @@ public static class ChainResolver
         if (firstJointsContainer.IsChainExist() && secondJointContainer.IsChainExist())
         {
             Debug.Log("CONCAT");
-            firstJointsContainer._weightsChain = firstJointsContainer._weightsChain
-                .CombineChains(secondJointContainer._weightsChain);
-            return firstJointsContainer._weightsChain;
+            firstJointsContainer.weightsChain = firstJointsContainer.weightsChain
+                .CombineChains(secondJointContainer.weightsChain);
+            return firstJointsContainer.weightsChain;
         }
 
         if (firstJointsContainer.IsChainExist())
         {
-            firstJointsContainer._weightsChain.Add(secondJointContainer);
-            return firstJointsContainer._weightsChain;
+            firstJointsContainer.weightsChain.Add(secondJointContainer);
+            return firstJointsContainer.weightsChain;
         }
 
         if (secondJointContainer.IsChainExist())
         {
-            secondJointContainer._weightsChain.Add(firstJointsContainer);
-            return secondJointContainer._weightsChain;
+            secondJointContainer.weightsChain.Add(firstJointsContainer);
+            return secondJointContainer.weightsChain;
         }
 
         List<JointsContainer> jointsContainers = new List<JointsContainer> {firstJointsContainer,secondJointContainer };

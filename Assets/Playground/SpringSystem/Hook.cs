@@ -35,8 +35,11 @@ public class Hook : MonoBehaviour
         if (!mount)
             return;
         
+
         if (mount.IsAttached())
             return;
+        
+        Debug.Log("WADS");
         
         BeConnect(mount);
     }

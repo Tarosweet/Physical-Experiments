@@ -8,21 +8,24 @@ public class Draggable : MonoBehaviour
     private Vector3 mouseOffset;
     private float mouseZPos;
 
-    private Transform dragabbleTransform;
+    [SerializeField] private Transform dragabbleTransform;
 
     private Camera mainCamera;
+
+    private Vector3 position;
 
     private void Start()
     {
         mainCamera = Camera.main;
 
-        dragabbleTransform = transform;
+        if (!dragabbleTransform)
+            dragabbleTransform = transform;
     }
 
     private void OnMouseDown()
     {
-        var position = dragabbleTransform.position;
-        
+        position = dragabbleTransform.position;
+
         mouseZPos = mainCamera.WorldToScreenPoint(position).z;
 
         mouseOffset = position - GetMouseWorldPos();
@@ -40,5 +43,11 @@ public class Draggable : MonoBehaviour
     private void OnMouseDrag()
     {
         dragabbleTransform.position = GetMouseWorldPos() + mouseOffset;
+        Debug.Log(GetDistanceFromClick());
+    }
+
+    public float GetDistanceFromClick()
+    {
+        return position.x - GetMouseWorldPos().x;
     }
 }

@@ -27,7 +27,7 @@ public class TransformZeroing : MonoBehaviour
     {
         if (_jointController.IsAttached())
         {
-            _jointController.rigidbody.isKinematic = false;
+            _jointController.SetKinematic(false);
             return;
         }
         
@@ -36,7 +36,7 @@ public class TransformZeroing : MonoBehaviour
 
         Load();
 
-        _jointController.rigidbody.isKinematic = true;
+        _jointController.SetKinematic(true);
     }
 
     private void Save()

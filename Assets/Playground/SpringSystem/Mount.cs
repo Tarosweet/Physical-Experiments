@@ -14,22 +14,26 @@ public class Mount : MonoBehaviour
 
     private Hook currentHook;
 
+    public BoxCollider collider;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+
+        collider = GetComponent<BoxCollider>();
     }
     
     public void Connect(JointsContainer hookJointsContainer)
     {
-        if (IsAttached())
-            return;
-        
+
         if (!IsNotSelf(hookJointsContainer))
             return;
 
-        _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody); //TODO кинематик убирать у пружины
+        _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody); 
 
         currentHook = hookJointsContainer.hook;
+        
+        jointsContainer.SetKinematic(false);
         
         ChainResolver.Resolve(jointsContainer, hookJointsContainer);
     }
@@ -43,10 +47,12 @@ public class Mount : MonoBehaviour
         
         if(jointsContainer.IsStaticMount())
             return;
+        
+        collider.enabled = false;
 
-        if (jointsContainer._weightsChain)
+        if (jointsContainer.weightsChain)
         {
-            jointsContainer._weightsChain.Remove(jointsContainer);
+            jointsContainer.weightsChain.Remove(jointsContainer);
             
             currentHook.BeDisconnect();
             currentHook = null;

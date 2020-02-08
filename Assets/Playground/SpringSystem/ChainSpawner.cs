@@ -22,7 +22,7 @@ public static class ChainSpawner
         foreach (var jointContainer in jointsContainers)
         {
             jointContainer.transform.SetParent(parent);
-            jointContainer._weightsChain = chain;
+            jointContainer.weightsChain = chain;
         }
     }
 }

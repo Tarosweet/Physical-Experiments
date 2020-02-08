@@ -36,7 +36,7 @@ public class WeightsChain : MonoBehaviour, IHavingMass
     public void Add(JointsContainer jointsContainer)
     {
         containers.Add(jointsContainer);
-        jointsContainer._weightsChain = this;
+        jointsContainer.weightsChain = this;
         
         jointsContainer.transform.SetParent(transform);
     }
