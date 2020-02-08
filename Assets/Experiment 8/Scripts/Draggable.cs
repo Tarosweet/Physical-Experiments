@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 public class Draggable : MonoBehaviour
 {
     private Vector3 mouseOffset;
@@ -18,6 +20,11 @@ public class Draggable : MonoBehaviour
     {
         mainCamera = Camera.main;
 
+        SetTarget();
+    }
+
+    private void SetTarget()
+    {
         if (!dragabbleTransform)
             dragabbleTransform = transform;
     }
@@ -43,7 +50,6 @@ public class Draggable : MonoBehaviour
     private void OnMouseDrag()
     {
         dragabbleTransform.position = GetMouseWorldPos() + mouseOffset;
-        Debug.Log(GetDistanceFromClick());
     }
 
     public float GetDistanceFromClick()

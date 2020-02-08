@@ -9,6 +9,7 @@ public static class ChainResolver
         if (firstJointsContainer.GetComponent<StaticMount>() || secondJointContainer.GetComponent<StaticMount>())
             return null;
         
+        
         if (firstJointsContainer.IsChainExist() && secondJointContainer.IsChainExist())
         {
             Debug.Log("CONCAT");

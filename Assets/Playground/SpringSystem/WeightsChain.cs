@@ -33,6 +33,26 @@ public class WeightsChain : MonoBehaviour, IHavingMass
         return mass;
     }
 
+    public int SetUI(bool value)
+    {
+        int index = 0;
+        
+        foreach (var container in containers)
+        {
+            InstallationUI ui = container.GetComponent<InstallationUI>();
+
+            if (ui)
+            {
+                ui.SetActive(value);
+
+                if (value)
+                    ui.Initialize(ref index);
+            }
+        }
+
+        return index;
+    }
+
     public void Add(JointsContainer jointsContainer)
     {
         containers.Add(jointsContainer);

@@ -29,6 +29,10 @@ public class Mount : MonoBehaviour
         if (!IsNotSelf(hookJointsContainer))
             return;
 
+        if (jointsContainer.IsInOneChain(hookJointsContainer))
+            return;
+        
+        
         _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody); 
 
         currentHook = hookJointsContainer.hook;
@@ -44,6 +48,7 @@ public class Mount : MonoBehaviour
             return;
         
         Destroy(_hingeJoint);
+        currentHook.BeDisconnect();
         
         if(jointsContainer.IsStaticMount())
             return;
@@ -54,7 +59,6 @@ public class Mount : MonoBehaviour
         {
             jointsContainer.weightsChain.Remove(jointsContainer);
             
-            currentHook.BeDisconnect();
             currentHook = null;
         }
     }

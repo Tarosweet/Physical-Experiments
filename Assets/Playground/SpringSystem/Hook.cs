@@ -13,6 +13,9 @@ public class Hook : MonoBehaviour
 
     public Mount currentMount;
 
+    public Action<JointsContainer> onHook;
+    public Action<JointsContainer> onDisconnectHook;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -20,6 +23,8 @@ public class Hook : MonoBehaviour
 
     public void BeDisconnect()
     {
+        onDisconnectHook?.Invoke(currentMount.jointsContainer);
+        Debug.Log("Disconnect");
         currentMount = null;
     }
 
@@ -39,7 +44,6 @@ public class Hook : MonoBehaviour
         if (mount.IsAttached())
             return;
         
-        Debug.Log("WADS");
         
         BeConnect(mount);
     }
@@ -49,5 +53,7 @@ public class Hook : MonoBehaviour
         currentMount = mount;
         
         mount.Connect(jointsContainer);
+        
+        onHook?.Invoke(mount.jointsContainer);
     }
 }

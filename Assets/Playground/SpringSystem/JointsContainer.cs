@@ -25,7 +25,6 @@ public class JointsContainer : MonoBehaviour, IHavingMass
 
     public void SetKinematic(bool value)
     {
-        Debug.Log("turn off " + value);
         foreach (var additionalBody in _additionalBodys)
         {
             additionalBody.isKinematic = value;
@@ -61,6 +60,14 @@ public class JointsContainer : MonoBehaviour, IHavingMass
     public bool IsHaveAttaches()
     {
        return hook.IsAttached();
+    }
+
+    public bool IsInOneChain(JointsContainer anotherContainer)
+    {
+        if (IsChainExist())
+            return (weightsChain.containers.Contains(anotherContainer));
+
+        return false;
     }
 
 }
