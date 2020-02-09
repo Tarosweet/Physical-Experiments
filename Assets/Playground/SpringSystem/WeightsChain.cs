@@ -61,9 +61,9 @@ public class WeightsChain : MonoBehaviour, IHavingMass
         jointsContainer.transform.SetParent(transform);
     }
 
-    public void Remove(JointsContainer jointsContainer)
+    public WeightsChain Remove(JointsContainer jointsContainer)
     {
-        WeightsChain splittedChain = SplitChain(this, jointsContainer);
+        return SplitChain(this, jointsContainer);
 
        /* if (containers.Count <= 1)
         {

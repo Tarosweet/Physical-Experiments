@@ -23,8 +23,8 @@ public class Hook : MonoBehaviour
 
     public void BeDisconnect()
     {
-        onDisconnectHook?.Invoke(currentMount.jointsContainer);
-        Debug.Log("Disconnect");
+      //  onDisconnectHook?.Invoke(currentMount.jointsContainer);
+       // Debug.Log(onDisconnectHook);
         currentMount = null;
     }
 

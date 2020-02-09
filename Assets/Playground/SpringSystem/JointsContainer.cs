@@ -70,4 +70,23 @@ public class JointsContainer : MonoBehaviour, IHavingMass
         return false;
     }
 
+    public Hook GetLastHookSequentially()
+    {
+        Hook lastHook = hook;
+        Debug.Log(lastHook);
+        while (lastHook)
+        {
+            if (lastHook.currentMount)
+            {
+                Debug.Log(lastHook.currentMount);
+                lastHook = lastHook.currentMount.jointsContainer.hook;
+            }
+            else
+            {
+                return lastHook;
+            }
+        }
+
+        return lastHook;
+    }
 }

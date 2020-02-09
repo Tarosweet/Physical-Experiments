@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,19 +49,29 @@ public class Mount : MonoBehaviour
             return;
         
         Destroy(_hingeJoint);
-        currentHook.BeDisconnect();
-        
+
         if(jointsContainer.IsStaticMount())
             return;
         
         collider.enabled = false;
+        
+        // выключать UI для новой цепочки! сюда добавить ивент 
 
-        if (jointsContainer.weightsChain)
+        currentHook.BeDisconnect();
+
+        if (jointsContainer.IsChainExist())
         {
-            jointsContainer.weightsChain.Remove(jointsContainer);
-            
-            currentHook = null;
+            jointsContainer.weightsChain.Remove(jointsContainer);//.SetUI(false);
         }
+        else
+        {
+            jointsContainer.GetComponent<InstallationUI>().SetActive(false); //TODO refactor
+        }
+
+        var onDisconnect = currentHook.onDisconnectHook;
+        currentHook = null;  //TODO refactor
+        onDisconnect.Invoke(jointsContainer);
+        
     }
 
     public Rigidbody GetConnectedBody()
