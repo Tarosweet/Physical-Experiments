@@ -9,6 +9,8 @@ public class UIInstallationSwitcher : MonoBehaviour
     [SerializeField] private Hook[] _hooks;
     
     [SerializeField] private Hook _hook;
+
+    [SerializeField] private FormulaUI _formulaUi; //TODO refactor?
      private Hook Hook
     {
         set
@@ -57,13 +59,24 @@ public class UIInstallationSwitcher : MonoBehaviour
 
     private void SetUI(JointsContainer container, bool value)
     {
+        int index = 1;
+        
         if (container.IsChainExist())
         {
-            container.weightsChain.SetUI(value);
+            index = container.weightsChain.SetUI(value);
+            _formulaUi.CalculateFormula(index); //TODO double code refactor
             return;
         }
-        
-        container.GetComponent<InstallationUI>().SetActive(value);
+
+        InstallationUI ui = container.GetComponent<InstallationUI>();
+        if (ui)
+        {
+            _formulaUi.CalculateFormula(index);  //TODO refactor
+            ui.Initialize(ref index);
+            ui.SetActive(value);
+            Debug.Log(_formulaUi);
+        }
+
     }
 
     private void Connected(JointsContainer container)
@@ -75,7 +88,8 @@ public class UIInstallationSwitcher : MonoBehaviour
     private void Disconnected(JointsContainer container)
     {
         SetUI(container,false);
-        Hook = GetComponent<JointsContainer>().GetLastHookSequentially();
+        Hook = GetComponent<JointsContainer>().GetLastHookSequentially(); //TODO refactor
+        SetUI(Hook.jointsContainer, true);
     }
     
 }

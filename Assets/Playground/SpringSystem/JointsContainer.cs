@@ -73,7 +73,6 @@ public class JointsContainer : MonoBehaviour, IHavingMass
     public Hook GetLastHookSequentially()
     {
         Hook lastHook = hook;
-        Debug.Log(lastHook);
         while (lastHook)
         {
             if (lastHook.currentMount)

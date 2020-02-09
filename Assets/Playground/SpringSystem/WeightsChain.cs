@@ -35,7 +35,7 @@ public class WeightsChain : MonoBehaviour, IHavingMass
 
     public int SetUI(bool value)
     {
-        int index = 0;
+        int index = 1;
         
         foreach (var container in containers)
         {
@@ -50,7 +50,7 @@ public class WeightsChain : MonoBehaviour, IHavingMass
             }
         }
 
-        return index;
+        return index - 1;
     }
 
     public void Add(JointsContainer jointsContainer)
