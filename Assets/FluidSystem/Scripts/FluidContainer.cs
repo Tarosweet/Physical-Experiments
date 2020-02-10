@@ -248,6 +248,12 @@ public class FluidContainer : MonoBehaviour
         }
     }
 
+    private void RemoveFluid(Fluid fluid)
+    {
+        UnsubscribeToFluid(fluid);
+        _fluids.Remove(fluid);
+    }
+
     public void OnChangeColor()
     {
         CalculateColours();
@@ -269,11 +275,13 @@ public class FluidContainer : MonoBehaviour
     {
         fluid.onChangeColor += OnChangeColor;
         fluid.onChangeCount += OnChangeLiters;
+        fluid.onZeroCount += RemoveFluid;
     }
 
     public void UnsubscribeToFluid(Fluid fluid)
     {
         fluid.onChangeColor -= OnChangeColor;
         fluid.onChangeCount -= OnChangeLiters;
+        fluid.onZeroCount -= RemoveFluid;
     }
 }

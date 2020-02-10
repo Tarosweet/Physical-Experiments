@@ -22,11 +22,6 @@ public class DecreaseFluidAction : IFluidAction
         if (_count >= fluid.GetCount())
         {
             fluid.SetCount(0);
-            _container.UnsubscribeToFluid(fluid);
-            List<Fluid> list = _container.GetFluids();
-            list.Remove(fluid);
-            _container.SetFluids(list);
-            _container.OnDeletedFluid();
             return;
         }
         

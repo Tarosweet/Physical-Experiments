@@ -18,6 +18,7 @@ public class Fluid
     [SerializeField] private Queue<Fluid> _toFluidReaction;
     public Action onChangeColor;
     public Action onChangeCount;
+    public Action<Fluid> onZeroCount;
 
     public Fluid(Color color, float density)
     {
@@ -54,6 +55,12 @@ public class Fluid
         
         if (onChangeCount != null) 
             onChangeCount.Invoke();
+        
+        if (_count <= 0)
+        {
+            if(onZeroCount != null)
+                onZeroCount.Invoke(this);
+        }
     }
 
     public void IncreaseCount(float count)
