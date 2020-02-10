@@ -63,6 +63,7 @@ public class UIInstallationSwitcher : MonoBehaviour
         
         if (container.IsChainExist())
         {
+            Debug.Log("ds");
             index = container.weightsChain.SetUI(value);
             _formulaUi.CalculateFormula(index); //TODO double code refactor
             return;
@@ -74,7 +75,6 @@ public class UIInstallationSwitcher : MonoBehaviour
             _formulaUi.CalculateFormula(index);  //TODO refactor
             ui.Initialize(ref index);
             ui.SetActive(value);
-            Debug.Log(_formulaUi);
         }
 
     }
@@ -82,6 +82,7 @@ public class UIInstallationSwitcher : MonoBehaviour
     private void Connected(JointsContainer container)
     {
         SetUI(container,true);
+        Debug.Log(Hook);
         Hook = container.GetLastHookSequentially();
     }
 

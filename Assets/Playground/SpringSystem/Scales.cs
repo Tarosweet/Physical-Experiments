@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Scales : MonoBehaviour
-    {
-        [SerializeField] private Hook _hook;
+{
+    [SerializeField] private Hook _hook;
         [SerializeField] private ScalesUI ui;
         
         [SerializeField] private Hook[] _hooks;
@@ -39,7 +39,7 @@ public class Scales : MonoBehaviour
         
         private void OnEnable()
         {
-            _hook.onHook += ShowMass;
+            Listen();
             
             foreach (var hook in _hooks)
             {
@@ -49,7 +49,7 @@ public class Scales : MonoBehaviour
 
         private void OnDisable()
         {
-            _hook.onHook -= ShowMass;
+           StopListen();
             
             foreach (var hook in _hooks)
             {
@@ -75,6 +75,7 @@ public class Scales : MonoBehaviour
         private void Connected(JointsContainer container)
         {
             ShowMass(container);
+            Debug.Log(Hook);
             Hook = container.GetLastHookSequentially();
         }
 

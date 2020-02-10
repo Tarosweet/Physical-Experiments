@@ -23,8 +23,7 @@ public class Hook : MonoBehaviour
 
     public void BeDisconnect()
     {
-      //  onDisconnectHook?.Invoke(currentMount.jointsContainer);
-       // Debug.Log(onDisconnectHook);
+
         currentMount = null;
     }
 
@@ -53,7 +52,7 @@ public class Hook : MonoBehaviour
         currentMount = mount;
         
         mount.Connect(jointsContainer);
-        
+
         onHook?.Invoke(mount.jointsContainer);
     }
 }

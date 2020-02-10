@@ -32,13 +32,15 @@ public class Mount : MonoBehaviour
 
         if (jointsContainer.IsInOneChain(hookJointsContainer))
             return;
-        
+
+        transform.position = hookJointsContainer.hook.transform.position;
         
         _hingeJoint = CreateJoint(hookJointsContainer.hook.rigidbody); 
 
         currentHook = hookJointsContainer.hook;
         
         jointsContainer.SetKinematic(false);
+        
         
         ChainResolver.Resolve(jointsContainer, hookJointsContainer);
     }
@@ -54,14 +56,12 @@ public class Mount : MonoBehaviour
             return;
         
         collider.enabled = false;
-        
-        // выключать UI для новой цепочки! сюда добавить ивент 
 
         currentHook.BeDisconnect();
 
         if (jointsContainer.IsChainExist())
         {
-            jointsContainer.weightsChain.Remove(jointsContainer);//.SetUI(false);
+            jointsContainer.weightsChain.Remove(jointsContainer);
         }
         else
         {
