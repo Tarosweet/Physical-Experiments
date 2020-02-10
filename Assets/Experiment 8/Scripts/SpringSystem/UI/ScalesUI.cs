@@ -7,9 +7,11 @@ public class ScalesUI : MonoBehaviour
     [SerializeField] private GameObject UI;
     [SerializeField] private Text text;
 
+    [SerializeField] private float massToShowUI = 0.00001f;
+
     public void EnableUI(float mass)
     {
-        if (mass <= 0.00001)  //TODO refactor
+        if (mass <= massToShowUI) 
         {
             UI.SetActive(false);
             return;

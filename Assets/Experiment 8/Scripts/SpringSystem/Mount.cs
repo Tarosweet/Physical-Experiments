@@ -69,7 +69,7 @@ public class Mount : MonoBehaviour
         }
 
         var onDisconnect = currentHook.onDisconnectHook;
-        currentHook = null;  //TODO refactor
+        currentHook = null;  
         onDisconnect.Invoke(jointsContainer);
         
     }

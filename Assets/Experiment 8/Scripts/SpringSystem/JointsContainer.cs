@@ -7,14 +7,14 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Rigidbody))]
 public class JointsContainer : MonoBehaviour, IHavingMass
 {
-    public Mount mount; //TODO interface GetRigidbody? list<Rb>?
+    public Mount mount;
     public Hook hook;
 
     public Rigidbody rigidbody;
 
     public WeightsChain weightsChain;
 
-    [SerializeField] private List<Rigidbody> _additionalBodys = new List<Rigidbody>(); //TODO отдельный класс?
+    [SerializeField] private List<Rigidbody> _additionalBodys = new List<Rigidbody>();
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();

@@ -12,31 +12,11 @@ public class TransformZeroing : MonoBehaviour
 
     private Quaternion _rotation;
 
-    private JointsContainer _jointController; //вынести
-    
     void Start()
     {
         _transform = transform;
 
-        _jointController = GetComponent<JointsContainer>();
-        
         Save();
-    }
-
-    private void OnMouseUp() //TODO вынести в другой класс
-    {
-        if (_jointController.IsAttached())
-        {
-            _jointController.SetKinematic(false);
-            return;
-        }
-        
-        if (_jointController.IsHaveAttaches())
-            return;
-
-        Load();
-
-        _jointController.SetKinematic(true);
     }
 
     private void Save()
@@ -45,7 +25,7 @@ public class TransformZeroing : MonoBehaviour
         _rotation = _transform.rotation;
     }
 
-    private void Load()
+    public void Load()
     {
         _transform.position = _position;
         _transform.rotation = _rotation;
