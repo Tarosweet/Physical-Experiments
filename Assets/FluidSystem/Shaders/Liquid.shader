@@ -1,8 +1,4 @@
-﻿/*Please do support www.bitshiftprogrammer.com by joining the facebook page : fb.com/BitshiftProgrammer
-Legal Stuff:
-This code is free to use no restrictions but attribution would be appreciated.
-Any damage caused either partly or completly due to usage this stuff is not my responsibility*/
-Shader "BitshiftProgrammer/Liquid"
+﻿Shader "BitshiftProgrammer/Liquid"
 {
     Properties
     {
@@ -14,14 +10,14 @@ Shader "BitshiftProgrammer/Liquid"
  
     SubShader
     {
-        Tags {"RenderType"="Opaque" "Queue"="Transparent"  "DisableBatching" = "True" }
-  
+        Tags {"RenderType"="Transparent" "Queue"="Transparent" "DisableBatching" = "True" "IgnoreProjector" = "True"}
+        LOD 100
+        Zwrite off          
+        Blend SrcAlpha OneMinusSrcAlpha
+        Cull off // we want the front and back faces
+        AlphaToMask off
         Pass
         {
-		    Zwrite off
-            Blend SrcAlpha OneMinusSrcAlpha
-            Cull Off // we want the front and back faces
-            AlphaToMask off
          CGPROGRAM
          #pragma vertex vert
          #pragma fragment frag
@@ -31,6 +27,7 @@ Shader "BitshiftProgrammer/Liquid"
          {
            float4 vertex : POSITION;
 		   float3 normal : NORMAL;
+		   float2 uv: TEXCOORD0;
          };
  
          struct v2f
@@ -39,11 +36,17 @@ Shader "BitshiftProgrammer/Liquid"
 			float3 viewDir : COLOR;
 		    float3 normal : COLOR2;
 			float fillEdge : TEXCOORD2;
+			float3 worldPos: float3;
          };
  
+         sampler2D _MainTex;
+         float4 _MainTex_ST;
          float _FillAmount, _WobbleX, _WobbleZ;
-         float4 _TopColor, _FoamColor, _Colour;
-         float _Rim;
+         float4 _TopColor, _FoamColor;
+         float4 _Colour;
+         float4 _Color[15];
+         float _Heights[17];
+         int _Count;
            
 		 float4 RotateAroundYInDegrees (float4 vertex, float degrees)
          {
@@ -63,23 +66,28 @@ Shader "BitshiftProgrammer/Liquid"
 			float3 worldPosX = RotateAroundYInDegrees(float4(worldPos,0),360);
 			// rotate around XZ
 			float3 worldPosZ = float3 (worldPosX.y, worldPosX.z, worldPosX.x);
-			//v.vertex.y+=sin(worldPosZ.x + _Time.w);
 			// combine rotations with worldPos, based on sine wave from script
 			float3 worldPosAdjusted = worldPos + (worldPosX  * _WobbleX)+ (worldPosZ* _WobbleZ); 
 			// how high up the liquid is
 			o.fillEdge =  worldPosAdjusted.y + _FillAmount;
 			o.viewDir = normalize(ObjSpaceViewDir(v.vertex));
             o.normal = v.normal;
+            o.worldPos = worldPosAdjusted;
             return o;
+         }      
+         
+         float4 CalcColor(float pos){
+            for(int i = 0; i < _Count; i++){
+                if(pos > _Heights[i] && pos <= _Heights[i + 1])
+                    return _Color[i];
+            }
+            return _Color[0];
          }
-
-         fixed4 frag (v2f i, fixed facing : VFACE) : SV_Target
+         fixed4 frag (v2f i, fixed facing : VFACE) : COLOR
          {
-
-
+           float4 color = CalcColor(i.worldPos.y);
 		   float4 result = step(i.fillEdge, 0.5);
-           float4 resultColored = result * _Colour;
-
+           float4 resultColored = result *  color;
 		   return resultColored;
          }
          ENDCG

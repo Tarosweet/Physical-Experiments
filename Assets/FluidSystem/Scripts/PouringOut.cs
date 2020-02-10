@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PouringOut : MonoBehaviour
 {
@@ -9,36 +10,31 @@ public class PouringOut : MonoBehaviour
 
     [SerializeField] private GameObject pourEffect;
 
-    [SerializeField] private float angleToPour = 30;
-
     [SerializeField] private float speed = 1f;
-
+    
     [SerializeField] private FluidContainer _fluidContainer;
 
     private Transform _pouringObjectTransform;
 
-    private PouringEffectParticle _currentPourEffect;
-
-    private IPouring _pouring;
+    [SerializeField] private PouringEffectParticle _currentPourEffect;
+    private IFluidActionBuilder _builder;
 
     void Start()
     {
         _pouringObjectTransform = transform;
-        _pouring = GetComponent<IPouring>();
-        
     }
     
     void Update()
     {
-        Debug.DrawLine(pourPoint.bounds.min, pourPoint.bounds.max, Color.red);
+
         if (_fluidContainer.CheckWaterLevel(pourPoint.bounds.min))
         {
-            float count = speed;
-            if (speed > _fluidContainer.GetLitersFluid())
+            float size = CalculateSize();
+            float count = speed * size;
+            if (count > _fluidContainer.GetLitersFluid())
             {
                 count = _fluidContainer.GetLitersFluid();
             }
-            _fluidContainer.Decrease(count);
             TransferFluid(PourOut(), count);
             return;
         }
@@ -54,33 +50,31 @@ public class PouringOut : MonoBehaviour
         if (!_currentPourEffect)
         {
             _currentPourEffect = Instantiate(pourEffect, pourPoint.transform).GetComponent<PouringEffectParticle>();
+            
         }
-
+        float size = CalculateSize();
+        _currentPourEffect.SetColor(_fluidContainer.GetColor(IsUp()));
+        _currentPourEffect.SetPosition(point);
+        _currentPourEffect.SetSize(size);
+        _currentPourEffect.SetGravity(_pouringObjectTransform.lossyScale.y/1000.0f);
         RaycastHit hit;
-        if (Physics.Raycast(point, Vector3.down, out hit, Mathf.Infinity))
-        {
-            float size = CalculateSize();
-            Debug.DrawRay(point, Vector3.down * hit.distance, Color.yellow);
-            _currentPourEffect.SetColor(_fluidContainer.GetColor());
-            _currentPourEffect.SetPosition(point);
-            _currentPourEffect.SetSize(size);
-            _currentPourEffect.SetGravity(_pouringObjectTransform.lossyScale.y/1000.0f);
-        }
-
+        Physics.Raycast(point, Vector3.down, out hit, Mathf.Infinity);
+        Debug.DrawLine(point,  point + Vector3.down * hit.distance, Color.cyan);
         return hit;
     }
 
     private float CalculateSize()
     {
         var bounds = pourPoint.bounds;
-        if (_fluidContainer.GetWaterLevel() > (bounds.size.y + bounds.min.y))
+        float waterLevel = _fluidContainer.GetWaterLevel();
+        if (waterLevel > (bounds.size.y + bounds.min.y))
         {
             float dist = Vector3.Distance(bounds.min, bounds.max); 
             return Mathf.Sqrt(dist * dist / 2);
         }
 
         Vector3 boundMin = bounds.min;
-        Vector3 to = new Vector3(boundMin.x, _fluidContainer.GetWaterLevel(), boundMin.z);
+        Vector3 to = new Vector3(boundMin.x, waterLevel, boundMin.z);
         return Vector3.Distance(boundMin, to);
     }
 
@@ -115,7 +109,7 @@ public class PouringOut : MonoBehaviour
         float distanceLevel = Vector3.Distance(boundMin, level) / 2;
         Vector3 to = (center - result).normalized * distanceLevel;
         result += to;
-       /* if (Vector3.Distance(result, down) > distanceLevel)
+            /*if (Vector3.Distance(result, down) > distanceLevel)
         {
             result = result + (down - result).normalized * distanceLevel;
         }*/
@@ -125,31 +119,45 @@ public class PouringOut : MonoBehaviour
 
     private void TransferFluid(RaycastHit hit, float count)
     {
-        if(hit.transform == null) return;
+
+        FluidContainer container = hit.transform?.GetComponent<FluidContainer>();
         
-        FluidContainer container = hit.transform.GetComponent<FluidContainer>();
-        if (container != null && container != _fluidContainer)
+        if (container == _fluidContainer) container = null;
+        
+        if (container != null)
         {
             _currentPourEffect.SetColliderTrigger(container.GetCollider());
-            container.Increase(count, _fluidContainer.GetColor());
+            //container.Increase(count, _fluidContainer.GetColor());
         }
+        
+        if (IsUp())
+        {
+            _builder = new UpTransferFluidActionBuilder(_fluidContainer, container, count);
+        }
+        else
+        {
+            _builder = new DownTransferFluidActionBuilder(_fluidContainer, container, count);
+        }
+        
+        _builder.Build().Execute();
+    }
+
+    private bool IsUp()
+    {
+        if ((pourPoint.bounds.center - transform.position).normalized.y >= 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void StopPouring()
     {
         if (_currentPourEffect != null)
         {
-            StartCoroutine(StopPouringDelay());
+          _currentPourEffect.Stop();
+          _currentPourEffect = null;
         }
-    }
-
-    IEnumerator StopPouringDelay()
-    {
-        _currentPourEffect.Stop();
-        GameObject tmp = _currentPourEffect.gameObject;
-        float time = _currentPourEffect.GetDelay();
-        _currentPourEffect = null;
-        yield return new WaitForSeconds(time);
-        Destroy(tmp);
     }
 }

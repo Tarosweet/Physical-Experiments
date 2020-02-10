@@ -41,6 +41,14 @@ public class PouringEffectParticle : MonoBehaviour
 
     public void Stop()
     {
+     StartCoroutine(StopPouringDelay());
+    }
+
+    IEnumerator StopPouringDelay()
+    {
         _particleSystem.Stop();
+        yield return new WaitForSeconds(GetDelay());
+        _particleSystem.Clear();
+        Destroy(this.gameObject);
     }
 }

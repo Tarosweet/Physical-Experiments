@@ -48,6 +48,8 @@ public class Wobble : MonoBehaviour
         AddClampedVelocityToWobble();
         
         KeepLastPosition();
+
+        DecreaseWobbleOverTime();
     }
 
     private void DecreaseWobbleOverTime()
