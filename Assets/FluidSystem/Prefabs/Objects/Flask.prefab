@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7764503026679454110}
   - component: {fileID: 7764503026679454111}
   - component: {fileID: 7764503026679454080}
-  - component: {fileID: 7764503026679454081}
   - component: {fileID: 7764503026679454107}
+  - component: {fileID: 1871520263}
   m_Layer: 0
   m_Name: Flask
   m_TagString: Untagged
@@ -100,8 +100,9 @@ MonoBehaviour:
   pourPoint: {fileID: 7764503027282361943}
   pourEffect: {fileID: 6512495040041014891, guid: f40c504ae64d6894295bbbc386905012,
     type: 3}
-  speed: 1
+  speed: 100
   _fluidContainer: {fileID: 7764503026679454080}
+  _currentPourEffect: {fileID: 0}
 --- !u!114 &7764503026679454080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,23 +118,42 @@ MonoBehaviour:
   _fluidObject: {fileID: 7764503026862147854}
   _renderer: {fileID: 7764503026862147853}
   _maxLiters: 1000
-  _countLiters: 1000
-  _color: {r: 1, g: 0.18396229, b: 0.33578333, a: 1}
-  _collider: {fileID: 7764503026679454081}
---- !u!136 &7764503026679454081
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7764503026679454082}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.0000979252
-  m_Height: 0.000991275
-  m_Direction: 1
-  m_Center: {x: 1.0430813e-10, y: 0.00015187792, z: 8.940697e-11}
+  _countLiters: 0
+  _color: {r: 0.18431371, g: 0.4031554, b: 1, a: 1}
+  _collider: {fileID: 1871520263}
+  _fluids:
+  - _color: {r: 0.504717, g: 1, b: 0.96969134, a: 1}
+    _count: 250
+    _intensity: 1
+    _time: 0
+    _density: 5
+    _viscosity: 0
+    _speedMixing: 0
+    _isReaction: 0
+  - _color: {r: 1, g: 0.5058824, b: 0.5316406, a: 0.4627451}
+    _count: 250
+    _intensity: 1
+    _time: 0
+    _density: 4
+    _viscosity: 0
+    _speedMixing: 0
+    _isReaction: 0
+  - _color: {r: 0.97993517, g: 0.5058824, b: 1, a: 0.11372549}
+    _count: 250
+    _intensity: 1
+    _time: 0
+    _density: 3
+    _viscosity: 0
+    _speedMixing: 0
+    _isReaction: 0
+  - _color: {r: 0.5058824, g: 0.5733659, b: 1, a: 1}
+    _count: 250
+    _intensity: 1
+    _time: 0
+    _density: 2
+    _viscosity: 0
+    _speedMixing: 0
+    _isReaction: 0
 --- !u!114 &7764503026679454107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +166,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bce4325038241879461832335a16d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &1871520263
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7764503026679454082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 0
+  m_Mesh: {fileID: 5272766233787845047, guid: 6462517ff1a7eef4f80d151cc83a577b, type: 3}
 --- !u!1 &7764503026862147854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,7 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f09c86a7986fb74dad565b733f5bafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxWobble: 0.0001
+  MaxWobble: 0.01
   WobbleSpeed: 1
   Recovery: 1
 --- !u!1 &7764503027282361944

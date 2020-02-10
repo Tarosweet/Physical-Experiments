@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506800365713673025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0008098, y: -0.0012205, z: -0.0000293}
+  m_LocalPosition: {x: -0.0008098, y: -0.001201, z: -0.0000293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4787943169441034852}
@@ -2040,6 +2040,7 @@ GameObject:
   - component: {fileID: 7788341299216561323}
   - component: {fileID: 506800364237668933}
   - component: {fileID: 506800364237668938}
+  - component: {fileID: 1409703158}
   m_Layer: 0
   m_Name: Faucet
   m_TagString: Untagged
@@ -2131,6 +2132,7 @@ MonoBehaviour:
   _pouringObjectTransform: {fileID: 4787943169441034852}
   _speedOut: 10
   _size: 0.1
+  _handle: {fileID: 506800364297763901}
 --- !u!114 &506800364237668938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2147,8 +2149,31 @@ MonoBehaviour:
   _renderer: {fileID: 506800365983764400}
   _maxLiters: 1000
   _countLiters: 1000
-  _color: {r: 0.75, g: 1, b: 0.99723905, a: 0.5019608}
-  _collider: {fileID: 0}
+  _color: {r: 0.5707547, g: 0.90018284, b: 1, a: 0.34901962}
+  _collider: {fileID: 1409703158}
+  _fluids:
+  - _color: {r: 0.27058828, g: 0.9216282, b: 1, a: 0.2901961}
+    _count: 1000
+    _intensity: 1
+    _time: 0
+    _density: 6
+    _viscosity: 0
+    _speedMixing: 20
+    _isReaction: 0
+--- !u!64 &1409703158
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370337007340912759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 0
+  m_Mesh: {fileID: -7888025001005996910, guid: 3d7a49d8080aa2d479d4666e88788c71, type: 3}
 --- !u!1 &8957442350151847474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2268,6 +2293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6114b478de5a2ba44b5f457875135904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 3645037837524737450}
   _handle: {fileID: 521052437653990042}
   _toRotate: {x: 0, y: 0, z: -90}
   _startRotate: {x: 0, y: 0, z: 0}
