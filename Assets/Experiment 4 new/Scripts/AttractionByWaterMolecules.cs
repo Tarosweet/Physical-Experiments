@@ -16,12 +16,13 @@ public class AttractionByWaterMolecules : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        IAttractable attractable = other.GetComponent<IAttractable>(); //in ontriggerenter?
+        Attractable attractable = other.GetComponent<Attractable>();
         
         if (attractable == null)
             return;
 
         Attract(attractable.GetRigidbody());
+        attractable.EnableParticle();
     }
 
     private void Attract(Rigidbody attractable)
