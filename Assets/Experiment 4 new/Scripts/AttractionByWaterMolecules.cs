@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class AttractionByWaterMolecules : MonoBehaviour
 {
-    [SerializeField] private float pullForce = 1f;
-    [SerializeField] private float attractTime = 2f;
     [SerializeField] private Vector3 attractionDirection = Vector3.down;
 
     private HingeJoint _hingeJoint;
