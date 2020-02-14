@@ -7,11 +7,14 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Draggable : MonoBehaviour
 {
+    
     private Vector3 mouseOffset;
     private float mouseZPos;
 
     [SerializeField] private Transform dragabbleTransform;
-
+    
+    [SerializeField] private float speed = 10f;
+    
     private Camera mainCamera;
 
     private Vector3 position;
@@ -49,7 +52,8 @@ public class Draggable : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        dragabbleTransform.position = GetMouseWorldPos() + mouseOffset;
+        dragabbleTransform.position = Vector3.Lerp(dragabbleTransform.transform.position,
+            GetMouseWorldPos() + mouseOffset,speed*Time.deltaTime);
     }
 
     public float GetDistanceFromClick()

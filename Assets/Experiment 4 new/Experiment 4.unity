@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attractionDirection: {x: 0, y: -1, z: 0}
-  breakForce: 500
+  breakForce: 300
 --- !u!54 &616772282
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1205,8 +1205,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403119970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.009, y: 2.027, z: 0.457}
-  m_LocalScale: {x: 0.48070464, y: 0.049571782, z: 0.52559}
+  m_LocalPosition: {x: 0.009, y: 2.027, z: 0.5939}
+  m_LocalScale: {x: 0.48070464, y: 0.049571782, z: 0.25175762}
   m_Children: []
   m_Father: {fileID: 1411197799853345995}
   m_RootOrder: 5
@@ -1588,7 +1588,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &1817602832
 HingeJoint:
@@ -1601,7 +1601,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000007792343, y: 0.09208683, z: 0.010002544}
+  m_ConnectedAnchor: {x: 0.00000007792343, y: 0.09208683, z: 0.010002497}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -1643,7 +1643,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce301c082baabce4589be8581d481723, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1680,7 +1680,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817602830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000049079, y: 0.428, z: 0.384}
+  m_LocalPosition: {x: 0.000000049079, y: 0.428, z: 0.654}
   m_LocalScale: {x: 0.05085871, y: 1, z: 0.0466909}
   m_Children: []
   m_Father: {fileID: 1411197799853345995}
@@ -6744,7 +6744,7 @@ SpringJoint:
   m_ConnectedBody: {fileID: 1411197800373538316}
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000025974478, y: 1.0701859, z: 0}
+  m_ConnectedAnchor: {x: -0.000000025974478, y: 1.0701859, z: -0.0662073}
   serializedVersion: 2
   m_Spring: 50
   m_Damper: 10
@@ -6816,7 +6816,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411197799889295082}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000001636, y: 2.023, z: 0.3777}
+  m_LocalPosition: {x: -0.00000001636, y: 2.023, z: 0.606}
   m_LocalScale: {x: 0.24189906, y: 0.042091154, z: 0.22007743}
   m_Children: []
   m_Father: {fileID: 1411197799853345995}
@@ -7046,7 +7046,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411197800373538319}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.37, z: 0.3777}
+  m_LocalPosition: {x: 0, y: 1.37, z: 0.6477}
   m_LocalScale: {x: 0.62984, y: 0.62984, z: 0.62984}
   m_Children:
   - {fileID: 1411197801318307260}
@@ -7308,6 +7308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragabbleTransform: {fileID: 1411197799853345995}
+  speed: 10
 --- !u!1 &1411197800948024330
 GameObject:
   m_ObjectHideFlags: 0
@@ -7339,7 +7340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411197800948024330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.602, z: 0.35}
+  m_LocalPosition: {x: 0, y: 1.602, z: 0.647}
   m_LocalScale: {x: 0.45745, y: 1, z: 0.45146}
   m_Children:
   - {fileID: 1411197800088900032}
@@ -7662,7 +7663,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1881431616094867325, guid: fc32b9e25d72df34c984ea91aa0a1ca9, type: 3}
+  - {fileID: 2100000, guid: 6203cacba43fc0a4197d8a07a1842162, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8107,7 +8108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4055398623728160353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 8.39, z: -0.17}
+  m_LocalPosition: {x: 0.65, y: 8.39, z: 0.78}
   m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_Children:
   - {fileID: 4055398622891690610}
@@ -8164,7 +8165,7 @@ MonoBehaviour:
   waveform: {fileID: 2800000, guid: e41f4726e37522348bee867507137bdc, type: 3}
   waveScale: 0.26
   strength: 0.04
-  maxRaycastDistance: 1
+  maxRaycastDistance: 0.3
 --- !u!59 &4055398623728160355
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -8176,7 +8177,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.49999997, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.26983583, y: -1.0208583, z: 0.7109827}
+  m_ConnectedAnchor: {x: -0.05396865, y: -0.9824321, z: 0.5128224}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -8311,6 +8312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragabbleTransform: {fileID: 0}
+  speed: 10
 --- !u!114 &4055398623728160413
 MonoBehaviour:
   m_ObjectHideFlags: 0
