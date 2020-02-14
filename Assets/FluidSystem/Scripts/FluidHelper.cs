@@ -32,11 +32,25 @@ public static class FluidHelper
         float newTimeToReaction = fluidA.GetTimeToReaction() > fluidB.GetTimeToReaction()
             ? fluidA.GetTimeToReaction()
             : fluidB.GetTimeToReaction();
-        f.SetTimeToReaction(newTimeToReaction);
+        f.SetTimeToReactionMixing(newTimeToReaction);
 
-        float newSpeedMixing = fluidB.GetSpeedMixing(); //Mathf.Lerp(fluidA.GetSpeedMixing(), fluidB.GetSpeedMixing(),Mathf.Clamp(ratio, 0, 1));
+        float newSpeedMixing = fluidA.GetSpeedMixing() > fluidB.GetSpeedMixing()? fluidA.GetSpeedMixing(): fluidB.GetSpeedMixing(); //Mathf.Lerp(fluidA.GetSpeedMixing(), fluidB.GetSpeedMixing(),Mathf.Clamp(ratio, 0, 1));
         f.SetSpeedMixing(newSpeedMixing);
-        
+        f.SetIsTimeMixing(fluidA.IsTimeMixing() || fluidB.IsTimeMixing());
+        f.SetIsDiffusion(fluidA.IsDiffusion() || fluidB.IsDiffusion());
+        float newSpeedDiffusion = fluidA.GetSpeedDiffusion() > fluidB.GetSpeedDiffusion()
+            ? fluidA.GetSpeedDiffusion()
+            : fluidB.GetSpeedDiffusion();
+        f.SetSpeedDiffusion(newSpeedDiffusion);
+        float newTimeToDiffusion = fluidA.GetTimeToDiffusion() > fluidB.GetTimeToDiffusion()
+            ? fluidA.GetTimeToDiffusion()
+            : fluidB.GetTimeToDiffusion();
+        f.SetTimeToDiffusion(newTimeToDiffusion);
+        float newFinalDiffusion = fluidA.GetFinalDiffusion() > fluidB.GetFinalDiffusion()
+            ? fluidA.GetFinalDiffusion()
+            : fluidB.GetFinalDiffusion();
+        f.SetFinalDiffusion(newFinalDiffusion);
+
         return f;
     }
 

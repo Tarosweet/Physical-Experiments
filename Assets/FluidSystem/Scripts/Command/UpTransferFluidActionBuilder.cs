@@ -93,20 +93,34 @@ public class UpTransferFluidActionBuilder : IFluidActionBuilder
             newFluid.SetCount(counts[i]);
             if (to != null)
             {
-                if (fluids[i].GetTimeToReaction() == 0)
+                actionContainer.Add(new IncreaseFluidAction(_containerTo, to, counts[i]));
+
+                if (!newFluid.IsTimeMixing())
                 {
-                    action = new MixingFluidAction(_containerTo, to, newFluid, counts[i]);
+                    if (to.IsTimeMixing())
+                    {
+                        actionContainer.Add(new MixingFluidWithoutColorAction(_containerTo,to,newFluid,counts[i]));
+                    }
+                    else
+                    {
+                        actionContainer.Add(new MixingFluidAction(_containerTo, to, newFluid, counts[i]));
+                    }
                 }
                 else
                 {
-                    action = new MixingFluidWithTimeAction(_containerTo, to, newFluid, counts[i]);
+                    actionContainer.Add(new MixingFluidWithTimeAction(_containerTo, to, newFluid, counts[i]));
                 }
+
+                if (newFluid.IsDiffusion() || to.IsDiffusion())
+                {
+                    actionContainer.Add(new DiffusionDelayAction(_containerTo, to));
+                }
+                
             }
             else
             {
-                action = new AppendFluidAction(_containerTo, newFluid);
+                actionContainer.Add(new AppendFluidAction(_containerTo, newFluid));
             }
-            actionContainer.Add(action);
         }
 
         return (IFluidAction)actionContainer;

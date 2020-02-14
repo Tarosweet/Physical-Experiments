@@ -14,23 +14,24 @@ public class FluidContainer : MonoBehaviour
     [SerializeField] private Renderer _renderer;
     [SerializeField] private float _maxLiters;
     [SerializeField] private float _countLiters;
-    [SerializeField] private Color _color;
     [SerializeField] private Collider _collider;
     [SerializeField] private List<Fluid> _fluids = new List<Fluid>();
     private float _percentFluid;
     
+    private int MAX_COLORS = 15;
+
+    public Action<Fluid> onAddedNewFluid;
+    
     private void Start()
     {
         Initialize();
-        CalculateColours();
     }
     
         
     public void Update()
     {
-        CalculateLiters();
+        //CalculateLiters();
         Filling();
-        CalculateColours();
     }
 
     private void Initialize()
@@ -40,7 +41,7 @@ public class FluidContainer : MonoBehaviour
             _fluidObject.SetActive(false);
         
         InitializeShader();
-        CalculateColours();
+        CalculateAll();
         CalculateLiters();
         SubscribeFluids();
         Filling();
@@ -69,6 +70,7 @@ public class FluidContainer : MonoBehaviour
     {
         foreach (var fluid in _fluids)
         {
+            fluid.SetFluidContainer(this);
             SubscribeToFluid(fluid);
         }
     }
@@ -139,10 +141,11 @@ public class FluidContainer : MonoBehaviour
         return isUp ? _fluids[_fluids.Count - 1].GetColor() : _fluids[0].GetColor();
     }
 
-    private void CalculateColours()
+    private void CalculateAll()
     {
         var rendererMaterial = _renderer.material;
         List<float> heights = new List<float>();
+        List<float> diffusions = new List<float>();
         List<Color> colours = new List<Color>();
         float nextPercent = 0;
         
@@ -159,7 +162,15 @@ public class FluidContainer : MonoBehaviour
             float percent = (_fluids[i].GetCount() / _maxLiters) * height;
             currentPos += percent;
             heights.Add(currentPos);
+            diffusions.Add(_fluids[i].GetDiffusion());
             colours.Add(_fluids[i].GetColor());
+        }
+
+        for (int i = 0; i < 14 - _fluids.Count; i++)
+        {
+            heights.Add(currentPos + 10);
+            diffusions.Add(0);
+            colours.Add(new Color(0, 0, 0, 0));
         }
         
         heights.Add(currentPos + 10);
@@ -167,45 +178,82 @@ public class FluidContainer : MonoBehaviour
 
         rendererMaterial.SetInt("_Count", _fluids.Count + 1);
         rendererMaterial.SetFloatArray("_Heights", heights);
+        rendererMaterial.SetFloatArray("_RangeDiffusion",diffusions);
         rendererMaterial.SetColorArray("_Color", colours);
     }
 
-    public void Decrease(float count)
+    private void ChangeFluids()
     {
-        float diff = _countLiters - count;
-        if (diff <= 0)
-        {
-            _countLiters = 0;
-            _fluidObject.SetActive(false);
-        }
-        else
-        {
-            _countLiters = diff;
-        }
+        CalculateAll();
     }
-
-    public void Increase(float count, Color color)
+    
+    private void ChangeCounts()
     {
-        float sum = _countLiters + count;
-        if (_countLiters <= 0f)
+        var rendererMaterial = _renderer.material;
+        rendererMaterial.SetInt("_Count", _fluids.Count + 1);
+    }
+    
+    private void ChangeColours()
+    {
+        List<Color> colours = new List<Color>();
+        var rendererMaterial = _renderer.material;
+        
+        for (int i = 0; i < _fluids.Count; i++)
         {
-            //SetColor(color);
-            _fluidObject.SetActive(true);
+            colours.Add(_fluids[i].GetColor());
+        }
+
+        for (int i = 0; i < MAX_COLORS - _fluids.Count; i++)
+        {
+            colours.Add(new Color(0, 0, 0, 0));
         }
         
-        if (sum >= _maxLiters)
+        rendererMaterial.SetColorArray("_Color", colours);
+    }
+
+    private void ChangeHeights()
+    {
+        var rendererMaterial = _renderer.material;
+        List<float> heights = new List<float>();
+        float nextPercent = 0;
+        
+        var bounds = _renderer.bounds;
+        float minPos = bounds.center.y - bounds.min.y;
+        float maxPos = bounds.max.y - bounds.center.y;
+        float height = CalculateHeight();
+        float currentPos = -minPos;
+        for (int i = 0; i < _fluids.Count; i++)
         {
-            _countLiters = _maxLiters;
+            float percent = (_fluids[i].GetCount() / _maxLiters) * height;
+            currentPos += percent;
+            heights.Add(currentPos);
         }
-        else
+        
+        for (int i = 0; i < MAX_COLORS - _fluids.Count; i++)
         {
-            _countLiters = sum;
+            heights.Add(currentPos + 10);
+        }
+        
+        rendererMaterial.SetFloatArray("_Heights", heights);
+    }
+
+    private void ChangeDiffusion()
+    {
+        List<float> diffusions = new List<float>();
+        
+        var rendererMaterial = _renderer.material;
+        
+        for (int i = 0; i < _fluids.Count; i++)
+        {
+            diffusions.Add(_fluids[i].GetDiffusion());
         }
 
-        if (_countLiters - count > 0)
+        for (int i = 0; i < MAX_COLORS - _fluids.Count; i++)
         {
-            //SetColor(CalculateColor(color, count));
+            diffusions.Add(0);
         }
+        
+        rendererMaterial.SetFloatArray("_RangeDiffusion",diffusions);
     }
 
     public Collider GetCollider()
@@ -230,39 +278,115 @@ public class FluidContainer : MonoBehaviour
 
     private IEnumerator MixingWithTimeDelay(Fluid from)
     {
-        int index = _fluids.IndexOf(from);
-        from = _fluids[index];
-        
-        Fluid toFluid = from.GetReaction();
+        Fluid toFluid = from.GetReactionMixing();
         yield return new WaitForSeconds(toFluid.GetTimeToReaction());
         
-        while (from.GetStatusReaction())
+        while (from.GetStatusReactionMixing())
         {
-            from.SetColor(Color.LerpUnclamped(from.GetColor(), toFluid.GetColor(), Time.deltaTime * toFluid.GetSpeedMixing()));
-            if (from.CheckFinishReaction())
+            from.SetColor(Color.Lerp(from.GetColor(), toFluid.GetColor(), Time.deltaTime * toFluid.GetSpeedMixing()));
+            toFluid = from.GetReactionMixing();
+            if (from.CheckFinishReactionMixing())
             {
                 from.SetColor(toFluid.GetColor());
-                toFluid = from.GetReaction();
             }
             yield return new WaitForSeconds(0.01f);
         }
     }
 
+    public void DiffusionWithTime(Fluid fluid)
+    {
+        StartCoroutine(DiffusionWithTimeDelay(fluid));
+    }
+
+    private IEnumerator DiffusionWithTimeDelay(Fluid fluid)
+    {
+        fluid.StartReactionDiffusion();
+        yield return new WaitForSeconds(fluid.GetTimeToDiffusion());
+        float currentDiffusion = fluid.GetDiffusion();
+        float toDiffusion = fluid.GetFinalDiffusion();
+        while (Math.Abs(currentDiffusion - toDiffusion) > Mathf.Epsilon)
+        {
+            fluid.SetDiffusion(Mathf.MoveTowards(currentDiffusion,toDiffusion,Time.deltaTime * fluid.GetSpeedDiffusion()));
+            currentDiffusion = fluid.GetDiffusion();
+            yield return new WaitForSeconds(0.01f);
+        }
+        fluid.SetDiffusion(toDiffusion);
+        fluid.StopReactionDiffusion();
+
+        if (fluid.IsMergeAfterDiffusion())
+        {
+            int index = _fluids.IndexOf(fluid);
+            if (index + 1 < _fluids.Count)
+            {
+                Fluid fluidTo = _fluids[index + 1];
+                MergeFluids(fluid, fluidTo);
+            }
+        }
+    }
+
+    public void MergeFluids(Fluid fluidFrom, Fluid fluidTo)
+    {
+        StartCoroutine(MergeFluidsWithTime(fluidFrom, fluidTo));
+    }
+
+    private IEnumerator MergeFluidsWithTime(Fluid fluidFrom, Fluid fluidTo)
+    {
+        float count = fluidFrom.GetCount() * fluidFrom.GetSpeedMerge();
+        fluidFrom.StartMergeReaction();
+        while (fluidFrom.GetCount() > 0)
+        {
+            IFluidAction action = new DecreaseFluidAction(this, fluidFrom, count);
+            action.Execute();
+            action = new IncreaseFluidAction(this, fluidTo, count);
+            action.Execute();
+            action = new MixingFluidAction(this, fluidTo, fluidFrom, count);
+            action.Execute();
+            yield return new WaitForSeconds(0.01f);
+        }
+        fluidFrom.StopMergeReaction();
+    }
+    
+    public void AppendFluid(Fluid fluid)
+    {
+        float density = fluid.GetDensity();
+        int i;
+        for (i = 0; i < _fluids.Count; i++)
+        {
+            if (_fluids[i].GetDensity() < density)
+            {
+                break;
+            }
+        }
+        
+        _fluids.Insert(i,fluid);
+        SubscribeToFluid(fluid);
+        ChangeFluids();
+
+        if (onAddedNewFluid != null) 
+            onAddedNewFluid.Invoke(fluid);
+    }
+    
     private void RemoveFluid(Fluid fluid)
     {
         UnsubscribeToFluid(fluid);
         _fluids.Remove(fluid);
+        ChangeFluids();
     }
 
     public void OnChangeColor()
     {
-        CalculateColours();
+        CalculateAll();
     }
     
     public void OnChangeLiters()
     {
         CalculateLiters();
-        CalculateColours();
+        CalculateAll();
+    }
+
+    public void OnChangeDiffusion()
+    {
+        CalculateAll();
     }
 
     public void OnDeletedFluid()
@@ -276,6 +400,7 @@ public class FluidContainer : MonoBehaviour
         fluid.onChangeColor += OnChangeColor;
         fluid.onChangeCount += OnChangeLiters;
         fluid.onZeroCount += RemoveFluid;
+        fluid.onChangeDiffusion += OnChangeDiffusion;
     }
 
     public void UnsubscribeToFluid(Fluid fluid)
@@ -283,5 +408,6 @@ public class FluidContainer : MonoBehaviour
         fluid.onChangeColor -= OnChangeColor;
         fluid.onChangeCount -= OnChangeLiters;
         fluid.onZeroCount -= RemoveFluid;
+        fluid.onChangeDiffusion -= OnChangeDiffusion;
     }
 }

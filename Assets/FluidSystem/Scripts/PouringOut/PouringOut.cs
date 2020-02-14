@@ -16,7 +16,7 @@ public class PouringOut : MonoBehaviour
 
     private Transform _pouringObjectTransform;
 
-    [SerializeField] private PouringEffectParticle _currentPourEffect;
+    private PouringEffectParticle _currentPourEffect;
     private IFluidActionBuilder _builder;
 
     void Start()
@@ -109,10 +109,10 @@ public class PouringOut : MonoBehaviour
         float distanceLevel = Vector3.Distance(boundMin, level) / 2;
         Vector3 to = (center - result).normalized * distanceLevel;
         result += to;
-            /*if (Vector3.Distance(result, down) > distanceLevel)
+            if (Vector3.Distance(result, down) > distanceLevel)
         {
             result = result + (down - result).normalized * distanceLevel;
-        }*/
+        }
 
         return result;
     }

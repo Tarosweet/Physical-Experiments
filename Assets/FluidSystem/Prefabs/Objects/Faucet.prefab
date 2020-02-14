@@ -2152,11 +2152,11 @@ MonoBehaviour:
   _color: {r: 0.5707547, g: 0.90018284, b: 1, a: 0.34901962}
   _collider: {fileID: 1409703158}
   _fluids:
-  - _color: {r: 0.27058828, g: 0.9216282, b: 1, a: 0.2901961}
+  - _color: {r: 0.27058828, g: 0.9216282, b: 1, a: 0.65882355}
     _count: 1000
     _intensity: 1
     _time: 0
-    _density: 6
+    _density: 11
     _viscosity: 0
     _speedMixing: 20
     _isReaction: 0

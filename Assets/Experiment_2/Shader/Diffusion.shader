@@ -1,4 +1,4 @@
-﻿Shader "BitshiftProgrammer/Liquid"
+﻿Shader "Unlit/Diffusion"
 {
      Properties
     {
@@ -14,7 +14,7 @@
         LOD 100
         Zwrite off          
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull back // we want the front and back faces
+        Cull off // we want the front and back faces
         AlphaToMask off
         Pass
         {
@@ -45,7 +45,8 @@
          float4 _TopColor, _FoamColor;
          float4 _Colour;
          float4 _Color[15];
-         float _RangeDiffusion[17];
+         bool _Diffusion[15];
+         float _RangeDiffusion[15];
          float _Heights[17];
          int _Count;
            
@@ -80,21 +81,20 @@
          float4 CalcColor(float pos){
             for(int i = 0; i < _Count; i++){
                 if(pos > _Heights[i] && pos <= _Heights[i + 1]){
-                uint k = i - 1;
-                float dist = _Heights[i+1] - _Heights[i];
-                float posOne = (pos - _Heights[i]) / dist;
-                float diff = _RangeDiffusion[k] / 2;
-                if(posOne < diff && i > 0){
-                    return lerp((_Color[i] + _Color[i-1]) / 2, _Color[i], posOne * (1 / diff));
-                } 
-                else{
-                    float scale = _RangeDiffusion[i] / 2;
-                    diff = 1 -_RangeDiffusion[i] / 2;
-                    if(posOne > diff && i < _Count - 1){
-                        return lerp(_Color[i],(_Color[i] + _Color[i + 1]) / 2,  (posOne - diff) * (1 / scale));
-                    }
-                }
-                return _Color[i];
+                uint k = i / 2;
+                        float dist = _Heights[i+1] - _Heights[i];
+                        float posOne = (pos - _Heights[i]) / dist;
+                        float diff = 0.5 - _RangeDiffusion[k] / 2;
+                        if(posOne < diff && i > 0){
+                            return lerp((_Color[i] + _Color[i-1]) / 2, _Color[i], posOne * (1 / diff));
+                        } 
+                        else{
+                        diff = (0.5 + _RangeDiffusion[i] / 2);
+                            if(posOne >= 1 - diff && i < _Count - 1){
+                                return lerp(_Color[i],(_Color[i] + _Color[i + 1]) / 2,  (posOne - diff) * (1 / diff));
+                            }
+                        }
+                        return _Color[i];
                 }
             }
             return _Color[0];
@@ -102,12 +102,12 @@
          
          fixed4 frag (v2f i, fixed facing : VFACE) : COLOR
          {
-         //_RangeDiffusion[0] = 0;
-         //_RangeDiffusion[1] = 0;
-         //_RangeDiffusion[2] = 0;
-         //_RangeDiffusion[3] = 0;
-         //_RangeDiffusion[4] = 0;
-         //_RangeDiffusion[5] = 0;
+         _RangeDiffusion[0] = 0;
+         _RangeDiffusion[1] = 0;
+         _RangeDiffusion[2] = 0;
+         _RangeDiffusion[3] = 0;
+         _RangeDiffusion[4] = 0;
+         _RangeDiffusion[5] = 0;
            float4 color = CalcColor(i.worldPos.y);
 		   float4 result = step(i.fillEdge, 0.5);
            float4 resultColored = result *  color;

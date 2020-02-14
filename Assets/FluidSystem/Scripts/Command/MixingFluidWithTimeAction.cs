@@ -21,16 +21,20 @@ public class MixingFluidWithTimeAction : IFluidAction
     {
 
         Fluid fluid = _fluidA;
-        
-        Fluid newFluid = FluidHelper.Mixing(fluid.GetLastReaction(), _fluidB, _count);
-        fluid.SetCount(fluid.GetCount()+_count);
+        Fluid newFluid = FluidHelper.Mixing(fluid.GetLastReactionMixing(), _fluidB, _count);
+        //fluid.SetCount(fluid.GetCount()+_count);
         fluid.SetDensity(newFluid.GetDensity());
         fluid.SetViscosity(newFluid.GetViscosity());
-        fluid.SetTimeToReaction(newFluid.GetTimeToReaction());
+        fluid.SetIsTimeMixing(newFluid.IsTimeMixing());
+        fluid.SetTimeToReactionMixing(newFluid.GetTimeToReaction());
         fluid.SetIntensity(newFluid.GetIntensity());
         fluid.SetSpeedMixing(newFluid.GetSpeedMixing());
+        fluid.SetIsDiffusion(newFluid.IsDiffusion());
+        fluid.SetTimeToDiffusion(newFluid.GetTimeToDiffusion());
+        fluid.SetSpeedDiffusion(newFluid.GetSpeedDiffusion());
+        fluid.SetFinalDiffusion(newFluid.GetFinalDiffusion());
         
-        if (!fluid.GetStatusReaction())
+        if (!fluid.GetStatusReactionMixing())
         {
             fluid.StartReaction(newFluid);
             _container.MixingWithTime(fluid);
