@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class Pump : MonoBehaviour
 {
-     private Transform _transform;
+    private Transform _transform;
     
      private Vector3 _startPosition;
      
      private Vector3 _lastPosition;
 
      private PumpBehavior _currentPumpBehavior;
+
+     [SerializeField] private Nozzle nozzle;
 
      [SerializeField] private AtmospherePressure _atmospherePressure;
     
@@ -31,7 +33,7 @@ public class Pump : MonoBehaviour
 
         _lastPosition = _transform.position;
 
-        if (IsWentDistance())
+        if (IsWentDistance() && nozzle.IsConnected)
         {
             _currentPumpBehavior.Pump(_atmospherePressure);
         }
@@ -50,7 +52,7 @@ public class Pump : MonoBehaviour
         if (direction.y > 0.1f)
             return new PumpUp();
 
-        return new PumpUp();
+        return new PumpDown();
     }
 
     private bool IsWentDistance()

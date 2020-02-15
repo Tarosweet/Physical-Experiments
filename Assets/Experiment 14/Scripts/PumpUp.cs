@@ -2,9 +2,11 @@
 {
     public class PumpUp : PumpBehavior
     {
+        private float pumpCount = 20f;
+
         public override void Pump(IPumped pumped)
         {
-            return;
+            pumped.Pumped(pumpCount);
         }
     }
 }

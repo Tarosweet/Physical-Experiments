@@ -17,13 +17,11 @@ public class AtmospherePressure : MonoBehaviour, IPumped
 
         public bool IsNear()
         {
-            Debug.Log(Vector3.Distance(firstObject.position, secondObject.position));
             return Vector3.Distance(firstObject.position, secondObject.position) < distanceForAtmosphericPressureToWork;
         }
 
         public bool IsLookingOnEachOther()
         {
-            Debug.Log(Mathf.Abs(Vector3.Angle(firstObject.forward, secondObject.forward)));
             return Mathf.Abs(Vector3.Angle(firstObject.forward, secondObject.forward)) <
                    angleForAtmosphericPressureToWork;
         }
@@ -40,7 +38,7 @@ public class AtmospherePressure : MonoBehaviour, IPumped
     public void Pumped(float value)
     {
         if (!_atmospherePressureBetween.IsLookingOnEachOther() || !_atmospherePressureBetween.IsNear())
-            return;
+            ZeroingAtmospherePressure();
         
         force += value;
         
@@ -67,13 +65,19 @@ public class AtmospherePressure : MonoBehaviour, IPumped
         _fixedJoint.connectedBody = _atmospherePressureBetween.secondObject.GetComponent<Rigidbody>();
     }
 
-    private void Unpress()
+    public void Unpress()
     {
-        Destroy(_fixedJoint);
+        ZeroingAtmospherePressure();
+        Destroy(_fixedJoint, 2f);
     }
 
     private bool IsPressed()
     {
         return _fixedJoint;
+    }
+
+    private void ZeroingAtmospherePressure()
+    {
+        force = 0;
     }
 }
