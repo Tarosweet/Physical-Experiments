@@ -19,6 +19,8 @@ public class Draggable : MonoBehaviour
 
     private Vector3 position;
 
+    private bool _isDrag;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -39,6 +41,8 @@ public class Draggable : MonoBehaviour
         mouseZPos = mainCamera.WorldToScreenPoint(position).z;
 
         mouseOffset = position - GetMouseWorldPos();
+        
+        _isDrag = true;
     }
 
     private Vector3 GetMouseWorldPos()
@@ -50,7 +54,20 @@ public class Draggable : MonoBehaviour
         return mainCamera.ScreenToWorldPoint(mousePoint);
     }
 
-    private void OnMouseDrag()
+    private void OnMouseUp()
+    {
+        _isDrag = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_isDrag)
+            return;
+        
+        Drag();
+    }
+
+    private void Drag()
     {
         dragabbleTransform.position = Vector3.Lerp(dragabbleTransform.transform.position,
             GetMouseWorldPos() + mouseOffset,speed*Time.deltaTime);
@@ -60,4 +77,5 @@ public class Draggable : MonoBehaviour
     {
         return position.x - GetMouseWorldPos().x;
     }
+    
 }

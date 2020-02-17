@@ -8,10 +8,12 @@ public class AtmospherePressureUI : MonoBehaviour
 {
     [SerializeField] private Text text;
 
+    private char letter = 'H';
+
     private int IntText
     {
-        get => Convert.ToInt32(text.text);
-        set => text.text = value.ToString();
+        get => Convert.ToInt32(text.text.Remove(text.text.Length - 1));
+        set => text.text = value.ToString() + letter;
     }
 
     [SerializeField] private AtmospherePressure _atmospherePressure;
@@ -25,8 +27,8 @@ public class AtmospherePressureUI : MonoBehaviour
 
     private void LerpInt()
     {
-        var lerp = Time.deltaTime / lerpDuration;
-        var value = (int) Mathf.SmoothStep(IntText, _atmospherePressure.force, lerp);
+        var lerp = Time.deltaTime * lerpDuration;
+        var value = (int) Mathf.Lerp(IntText, _atmospherePressure.force, lerp);
 
         IntText = value;
     }

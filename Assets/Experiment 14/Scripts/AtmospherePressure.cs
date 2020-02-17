@@ -30,6 +30,8 @@ public class AtmospherePressure : MonoBehaviour, IPumped
     [SerializeField] private AtmospherePressureBetween _atmospherePressureBetween;
     
     [SerializeField] private float forceToPress;
+
+    [SerializeField] private float maxPressure = 7000;
     
     public float force;
 
@@ -38,9 +40,12 @@ public class AtmospherePressure : MonoBehaviour, IPumped
     public void Pumped(float value)
     {
         if (!_atmospherePressureBetween.IsLookingOnEachOther() || !_atmospherePressureBetween.IsNear())
+        {
             ZeroingAtmospherePressure();
-        
-        force += value;
+            return;
+        }
+
+        force = Mathf.Clamp(force + value, 0, maxPressure);
         
         if (IfNeedToPress())
             Press();
