@@ -21,6 +21,7 @@ public class FluidContainer : MonoBehaviour
     private int MAX_COLORS = 15;
 
     public Action<Fluid> onAddedNewFluid;
+    public Action onChangeCountLiters;
     
     private void Start()
     {
@@ -30,6 +31,7 @@ public class FluidContainer : MonoBehaviour
         
     public void Update()
     {
+        ChangeDiffusion();
         //CalculateLiters();
         Filling();
     }
@@ -95,6 +97,9 @@ public class FluidContainer : MonoBehaviour
             _fluidObject.SetActive(false);
 
         _countLiters = liters;
+
+        if (onChangeCountLiters != null) 
+            onChangeCountLiters.Invoke();
     }
     private void Filling()
     {
@@ -130,9 +135,30 @@ public class FluidContainer : MonoBehaviour
         return level;
     }
 
+    public float GetWaterMinLevel()
+    {
+        return _renderer.bounds.min.y;
+    }
+    
     public float GetLitersFluid()
     {
         return _countLiters;
+    }
+
+    public float GetAverageDensity()
+    {
+        if (_fluids.Count == 0) return 0;
+        
+        float density = 0;
+        
+        foreach (var fluid in _fluids)
+        {
+            density += fluid.GetDensity();
+        }
+
+        float average = density / _fluids.Count;
+        
+        return average;
     }
 
     public Color GetColor(bool isUp)
@@ -166,15 +192,12 @@ public class FluidContainer : MonoBehaviour
             colours.Add(_fluids[i].GetColor());
         }
 
-        for (int i = 0; i < 14 - _fluids.Count; i++)
+        for (int i = 0; i < MAX_COLORS - _fluids.Count; i++)
         {
             heights.Add(currentPos + 10);
             diffusions.Add(0);
             colours.Add(new Color(0, 0, 0, 0));
         }
-        
-        heights.Add(currentPos + 10);
-        colours.Add(new Color(0, 0, 0, 0));
 
         rendererMaterial.SetInt("_Count", _fluids.Count + 1);
         rendererMaterial.SetFloatArray("_Heights", heights);
@@ -253,7 +276,7 @@ public class FluidContainer : MonoBehaviour
             diffusions.Add(0);
         }
         
-        rendererMaterial.SetFloatArray("_RangeDiffusion",diffusions);
+        rendererMaterial.SetFloatArray("_RangeDiffusion", diffusions);
     }
 
     public Collider GetCollider()
@@ -331,16 +354,24 @@ public class FluidContainer : MonoBehaviour
 
     private IEnumerator MergeFluidsWithTime(Fluid fluidFrom, Fluid fluidTo)
     {
+        float maxCount = fluidFrom.GetCount();
         float count = fluidFrom.GetCount() * fluidFrom.GetSpeedMerge();
         fluidFrom.StartMergeReaction();
+        
+        float currentDiffusion = fluidFrom.GetDiffusion();
+        float toDiffusion = 0;
+        
         while (fluidFrom.GetCount() > 0)
         {
+            count = maxCount * fluidFrom.GetSpeedMerge() * Time.deltaTime;
             IFluidAction action = new DecreaseFluidAction(this, fluidFrom, count);
             action.Execute();
             action = new IncreaseFluidAction(this, fluidTo, count);
             action.Execute();
             action = new MixingFluidAction(this, fluidTo, fluidFrom, count);
             action.Execute();
+            fluidFrom.SetDiffusion(Mathf.MoveTowards(currentDiffusion,toDiffusion,Time.deltaTime * fluidFrom.GetSpeedMerge()));
+            currentDiffusion = fluidFrom.GetDiffusion();
             yield return new WaitForSeconds(0.01f);
         }
         fluidFrom.StopMergeReaction();

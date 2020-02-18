@@ -35,6 +35,7 @@ public class Wobble : MonoBehaviour
         _mesh = GetComponent<MeshRenderer>();
         rend = GetComponent<Renderer>();
     }
+    
     private void Update()
     {
         time += Time.deltaTime;
@@ -50,6 +51,16 @@ public class Wobble : MonoBehaviour
         KeepLastPosition();
 
         DecreaseWobbleOverTime();
+    }
+
+    public void SetRecovery(float recovery)
+    {
+        Recovery = recovery;
+    }
+
+    public float GetRecovery()
+    {
+        return Recovery;
     }
 
     private void DecreaseWobbleOverTime()
