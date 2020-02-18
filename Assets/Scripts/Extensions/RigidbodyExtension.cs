@@ -15,5 +15,20 @@ namespace Extensions
         {
             return newtons * newtongks;
         }
+
+        public static float PotentialEnergy(float mass, float height)
+        {
+            return -Physics.gravity.y * mass * height;
+        }
+        
+        public static float KineticEnergy(float mass, float velocityMagnitude)
+        {
+            return mass * Mathf.Pow(velocityMagnitude, 2) * 0.5f;
+        }
+
+        public static float KineticEnergy(Rigidbody body)
+        {
+            return body.mass * Mathf.Pow(body.velocity.magnitude, 2) * 0.5f;
+        }
     }
 }
