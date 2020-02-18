@@ -44,13 +44,13 @@ public class StretchBetweenPoints : MonoBehaviour
 
     private void Stretch(Vector3 firstPoint, Vector3 secondPoint)
     {
-        float distance = Vector3.Distance(firstPoint, secondPoint); //Change Scale
+        float distance = Vector3.Distance(firstPoint, secondPoint); 
         springTransform.localScale = new Vector3(XZScale, XZScale, distance);
 
-        Vector3 middlePoint = (firstPoint + secondPoint) / 2; //Change Position
+        Vector3 middlePoint = (firstPoint + secondPoint) / 2; 
         springTransform.position = middlePoint;
         
-        Vector3 rotationDirection = (secondPoint - firstPoint); //Change Rotation
+        Vector3 rotationDirection = (secondPoint - firstPoint); 
         rotationDirection = _lockRotation.Lock(rotationDirection);
         springTransform.rotation = Quaternion.LookRotation(rotationDirection);
     }
