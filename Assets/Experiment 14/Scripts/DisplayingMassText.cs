@@ -40,6 +40,6 @@ namespace Experiment_14.Scripts
             }
 
             text.text = mass.ToString() + letter;
+            }
         }
     }
-}

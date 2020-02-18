@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
 public class Draggable : MonoBehaviour
 {
     
@@ -18,6 +18,8 @@ public class Draggable : MonoBehaviour
     private Camera mainCamera;
 
     private Vector3 position;
+
+    private bool _isDrag;
 
     private void Start()
     {
@@ -39,6 +41,8 @@ public class Draggable : MonoBehaviour
         mouseZPos = mainCamera.WorldToScreenPoint(position).z;
 
         mouseOffset = position - GetMouseWorldPos();
+        
+        _isDrag = true;
     }
 
     private Vector3 GetMouseWorldPos()
@@ -50,7 +54,20 @@ public class Draggable : MonoBehaviour
         return mainCamera.ScreenToWorldPoint(mousePoint);
     }
 
-    private void OnMouseDrag()
+    private void OnMouseUp()
+    {
+        _isDrag = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_isDrag)
+            return;
+        
+        Drag();
+    }
+
+    private void Drag()
     {
         dragabbleTransform.position = Vector3.Lerp(dragabbleTransform.transform.position,
             GetMouseWorldPos() + mouseOffset,speed*Time.deltaTime);
@@ -60,4 +77,5 @@ public class Draggable : MonoBehaviour
     {
         return position.x - GetMouseWorldPos().x;
     }
+    
 }
