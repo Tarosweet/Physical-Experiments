@@ -12,6 +12,7 @@ public class FluidContainer : MonoBehaviour
 {
     [SerializeField] private GameObject _fluidObject;
     [SerializeField] private Renderer _renderer;
+    [SerializeField] private float _centerFluidLevelMaterial;
     [SerializeField] private float _maxLiters;
     [SerializeField] private float _countLiters;
     [SerializeField] private Collider _collider;
@@ -34,6 +35,10 @@ public class FluidContainer : MonoBehaviour
         ChangeDiffusion();
         //CalculateLiters();
         Filling();
+                
+        Vector3 v = transform.position;
+        v.y = GetWaterLevel();
+        Debug.DrawLine(_renderer.bounds.min, v, Color.magenta);
     }
 
     private void Initialize()
@@ -107,7 +112,7 @@ public class FluidContainer : MonoBehaviour
         float height = CalculateHeight();
         float level = height * _percentFluid;
         float middle = height / 2;
-        _renderer.material.SetFloat("_FillAmount", middle - level + 0.5f);
+        _renderer.material.SetFloat("_FillAmount", middle - level + _centerFluidLevelMaterial);
     }
 
     private float CalculatePercent()
@@ -198,7 +203,16 @@ public class FluidContainer : MonoBehaviour
             diffusions.Add(0);
             colours.Add(new Color(0, 0, 0, 0));
         }
-
+        
+//        Debug.Log("heitght:" + height);
+//        Debug.Log("maxPos:" + maxPos);
+//        string s = "";
+//        foreach (float h in heights)
+//        {
+//            s += h.ToString() + " ";
+//        }
+//        Debug.Log(s);
+        
         rendererMaterial.SetInt("_Count", _fluids.Count + 1);
         rendererMaterial.SetFloatArray("_Heights", heights);
         rendererMaterial.SetFloatArray("_RangeDiffusion",diffusions);

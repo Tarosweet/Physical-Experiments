@@ -15,6 +15,7 @@ public class RotatorBase : MonoBehaviour
 
     private void Update()
     {
+        Debug.DrawLine(_transform.position -  _transform.forward * 100, _transform.position + _transform.forward * 100, Color.red);
         if (isPosible)
         {
             if (Input.mouseScrollDelta.y > 0)
@@ -32,7 +33,7 @@ public class RotatorBase : MonoBehaviour
 
     private void Rotate(float y)
     {
-        _transform.Rotate(new Vector3(0, 0, y));
+        _transform.Rotate(_transform.forward, y);
     }
 
     private void OnMouseDown()
