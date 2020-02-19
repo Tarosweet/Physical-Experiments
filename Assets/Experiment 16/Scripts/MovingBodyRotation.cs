@@ -21,7 +21,12 @@ public class MovingBodyRotation : MonoBehaviour
         Rotate();
     }
 
-    private void Rotate()
+    public void ChangeDirection()
+    {
+        speed *= (-1f);
+    }
+
+    public void Rotate()
     {
         _transform.Rotate(Vector3.up, _physicalMovingBody.KineticEnergy * speed * Time.deltaTime);
     }

@@ -5,6 +5,7 @@ using Extensions;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(MovingBodyRotation))]
 public class PhysicalMovingBody : MonoBehaviour
 {
     [SerializeField] private Vector3 threadEndPoint;
@@ -20,14 +21,17 @@ public class PhysicalMovingBody : MonoBehaviour
 
     private Transform _transform;
 
+    private MovingBodyRotation _movingBodyRotation;
+    
     private bool _isCanTurn;
 
-    private float Height => _transform.position.y - threadEndPoint.y;
+    public float Height => _transform.position.y - threadEndPoint.y;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+        _movingBodyRotation = GetComponent<MovingBodyRotation>();
     }
 
     private void Update()
@@ -51,8 +55,11 @@ public class PhysicalMovingBody : MonoBehaviour
         var velocity = body.velocity;
         var flippedVelocity = new Vector3(velocity.x, velocity.magnitude, velocity.z);
 
-        body.velocity = flippedVelocity;
-        // StartCoroutine(LerpVelocity(flippedVelocity, timeToTurn)); //Looks good but not right
+        //body.velocity = flippedVelocity;
+         StartCoroutine(LerpVelocity(flippedVelocity, timeToTurn)); //Looks good but not right
+        
+         Debug.Log("Turn");
+        _movingBodyRotation.ChangeDirection();
 
         _isCanTurn = false;
     }
