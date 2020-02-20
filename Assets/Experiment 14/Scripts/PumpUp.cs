@@ -2,7 +2,7 @@
 {
     public class PumpUp : PumpBehavior
     {
-        private float pumpCount = 500f;
+        private float pumpCount = 20f;
 
         public override void Pump(IPumped pumped)
         {

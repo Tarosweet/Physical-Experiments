@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovingBodyRotation))]
 [RequireComponent(typeof(Rigidbody))]
 public class PhysicalMovingBodyController : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-
-    private float potencialEnergy;
+    private MovingBodyRotation _movingBodyRotation;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _movingBodyRotation = GetComponent<MovingBodyRotation>();
     }
 
     private void OnMouseDown()
@@ -22,10 +23,7 @@ public class PhysicalMovingBodyController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (Math.Abs(potencialEnergy - FindObjectOfType<PhysicalMovingBody>().PotentialEnergy) > 0.001f)
-        transform.Rotate(Vector3.up, 50 * Time.deltaTime * FindObjectOfType<PhysicalMovingBody>().PotentialEnergy);
-
-        potencialEnergy = FindObjectOfType<PhysicalMovingBody>().PotentialEnergy; //TODO change
+        _movingBodyRotation.RotateWithPlayerContolls();
     }
 
     private void OnMouseUp()

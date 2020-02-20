@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Experiment_14.Scripts;
+using Extensions;
 using UnityEngine;
 
 public class Pump : MonoBehaviour
@@ -17,7 +18,10 @@ public class Pump : MonoBehaviour
      [SerializeField] private Nozzle nozzle;
 
      [SerializeField] private AtmospherePressure _atmospherePressure;
-    
+
+     [SerializeField] private float distanceToPump = 0.3f;
+     
+     
     void Start()
     {
         _transform = transform;
@@ -29,19 +33,19 @@ public class Pump : MonoBehaviour
 
     private void Update()
     {
-        _currentPumpBehavior = GetState(DirectionVector(_transform.position, _lastPosition));
+        _currentPumpBehavior = GetState(
+            VectorExtension.DirectionVectorNormalized(_transform.position, _lastPosition));
 
-        _lastPosition = _transform.position;
-
-        if (IsWentDistance() && nozzle.IsConnected)
+       if (VectorExtension.IsPassedDistanceInDirection(_transform.position, 
+            _lastPosition,VectorExtension.Axis.Y,distanceToPump))
         {
-            _currentPumpBehavior.Pump(_atmospherePressure);
-        }
-    }
+            if (nozzle.IsConnected)
+            {
+                _currentPumpBehavior.Pump(_atmospherePressure);
+            }
 
-    private Vector3 DirectionVector(Vector3 currentPosition, Vector3 lastPosition)
-    {
-        return (currentPosition - lastPosition).normalized;
+            _lastPosition = _transform.position;
+        }
     }
 
     private PumpBehavior GetState(Vector3 direction)
@@ -53,10 +57,5 @@ public class Pump : MonoBehaviour
             return new PumpUp();
 
         return new PumpDown();
-    }
-
-    private bool IsWentDistance()
-    {
-        return Math.Abs((_transform.position.y % 1.2f)) < 0.1f;
     }
 }

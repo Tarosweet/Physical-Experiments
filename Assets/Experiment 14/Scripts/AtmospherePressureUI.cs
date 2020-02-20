@@ -28,7 +28,7 @@ public class AtmospherePressureUI : MonoBehaviour
     private void LerpInt()
     {
         var lerp = Time.deltaTime * lerpDuration;
-        var value = (int) Mathf.Lerp(IntText, _atmospherePressure.force, lerp);
+        var value = (int) Mathf.MoveTowards(IntText, _atmospherePressure.force, lerp);
 
         IntText = value;
     }

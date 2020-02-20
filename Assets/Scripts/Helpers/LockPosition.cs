@@ -63,7 +63,7 @@ public class LockPosition : MonoBehaviour
         _startPosition = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Lock();
     }

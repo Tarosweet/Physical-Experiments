@@ -12,6 +12,8 @@ public class PhysicalMovingBody : MonoBehaviour
 
     [SerializeField] private float energyToTurn = 0.7f;
 
+    [SerializeField] private float energyToStop = 0.1f;
+
     [SerializeField] private float timeToTurn = 3f;
 
     [HideInInspector] public Rigidbody _rigidbody;
@@ -45,28 +47,38 @@ public class PhysicalMovingBody : MonoBehaviour
         {
             Turn();
         }
+
+        if (IsKineticEnergyLess(energyToStop) && IsPotentialEnergyLess(energyToStop))
+        {
+            _rigidbody.isKinematic = true;
+        }
     }
 
     private void Turn(Rigidbody body)
     {
+
         if (!_isCanTurn)
             return;
 
         var velocity = body.velocity;
         var flippedVelocity = new Vector3(velocity.x, velocity.magnitude, velocity.z);
 
-        //body.velocity = flippedVelocity;
-         StartCoroutine(LerpVelocity(flippedVelocity, timeToTurn)); //Looks good but not right
-        
-         Debug.Log("Turn");
+        Debug.Log("Turn");
         _movingBodyRotation.ChangeDirection();
-
-        _isCanTurn = false;
+        
+        ChangeVelocityDirectly(body,flippedVelocity);
+       // StartCoroutine(LerpVelocity(flippedVelocity, timeToTurn)); //Looks good but not right
     }
 
     private void Turn()
     {
         _isCanTurn = true;
+    }
+
+    private void ChangeVelocityDirectly(Rigidbody body, Vector3 velocity)
+    {
+        body.velocity = velocity;
+        _isCanTurn = false;
     }
 
     private IEnumerator LerpVelocity(Vector3 velocity ,float time)
@@ -80,6 +92,8 @@ public class PhysicalMovingBody : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        Debug.Log("Lerp end");
+        _isCanTurn = false;
     }
 
     private bool IsPotentialEnergyLess(float value)
@@ -92,7 +106,7 @@ public class PhysicalMovingBody : MonoBehaviour
         return KineticEnergy < value;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawCube(threadEndPoint, Vector3.one);
     }
