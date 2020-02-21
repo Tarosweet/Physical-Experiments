@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class MoleculeGroup : MonoBehaviour
+namespace Experiment_5.Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MoleculeGroup : MonoBehaviour
     {
+        public MoleculeMovement[] molecules;
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        public Vector3 boundBox = Vector3.one;
         
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(Vector3.zero, boundBox);
+        }
     }
 }
