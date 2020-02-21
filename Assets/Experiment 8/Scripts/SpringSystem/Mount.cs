@@ -67,10 +67,11 @@ public class Mount : MonoBehaviour
         {
             jointsContainer.GetComponent<InstallationUI>().SetActive(false); //TODO refactor
         }
-
+        
         var onDisconnect = currentHook.onDisconnectHook;
         currentHook = null;  
-        onDisconnect.Invoke(jointsContainer);
+        
+        onDisconnect?.Invoke(jointsContainer);
         
     }
 

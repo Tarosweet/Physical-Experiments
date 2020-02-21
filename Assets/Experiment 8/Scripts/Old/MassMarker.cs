@@ -17,7 +17,6 @@ public class MassMarker : MonoBehaviour
 
     private float mass;
 
-    [SerializeField] private ConclusionButton _conclusionButton;
 
 
     public void CalculateGeneralMass()
@@ -40,7 +39,6 @@ public class MassMarker : MonoBehaviour
 
             i++;
             
-            _conclusionButton.SetButtonState(IsConclusionButtonAvailable(i));
             
             newFormula += GetFormula(i);
         }
