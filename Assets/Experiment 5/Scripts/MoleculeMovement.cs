@@ -6,26 +6,33 @@ namespace Experiment_5.Scripts
 {
     public class MoleculeMovement : MonoBehaviour
     {
+        public Transform moleculeTransform;
+
         [SerializeField] private MoleculeGroup _moleculeGroup;
 
-        [SerializeField] private float speedForward;
+        [Header("Movement to position")]
+        [SerializeField] private float timeToReachPoint = 2f;
         
-        private Transform _transform;
-
+        [Header("Forward movement")]
+        [SerializeField] private float speedForward = 0.1f;
+        
         private Coroutine _currentCoroutine;
 
         private bool _isCanMove;
 
         private bool _isReverse;
 
+        private bool _isOutOfBounds;
+
         private void Awake()
         {
-            _transform = transform;
+            moleculeTransform = transform;
         }
 
         public void MoveTo(Vector3 position, float time)
         {
            _currentCoroutine = StartCoroutine(MoveToPosition(position, time));
+           _isOutOfBounds = false;
         }
 
         public void StopMove()
@@ -39,7 +46,7 @@ namespace Experiment_5.Scripts
         
         public void StartMoveInRandomDirection(Vector3 direction)
         {
-            _transform.LookAt(direction);
+            moleculeTransform.LookAt(direction);
             
             _isCanMove = true;
         }
@@ -50,41 +57,52 @@ namespace Experiment_5.Scripts
                 MoveForward();
         }
 
-        private void Move(Vector3 startingPoint, Vector3 position, float time)
+        private void MoveToPosition(Vector3 startingPoint, Vector3 position, float time)
         {
-            if (IsPositionOutOfBox(_transform.position, _moleculeGroup.boundBox))
+            if (_moleculeGroup.IsOutOfBounds(moleculeTransform.position) && !_isOutOfBounds)
             {
-                position = ReverseDirection(position);
+                position = Vector3.zero;
+                StopMove();
+                MoveTo(position, time);
+                _isOutOfBounds = true; //TODO REFACTOR
+                return;
             }
 
-            _transform.position = Vector3.Lerp(_transform.position, position, 
+            moleculeTransform.position = Vector3.Lerp(moleculeTransform.position, position, 
                 time);
         }
 
         private void MoveForward() //TODO разделить по классам движение
         { 
-            if (IsPositionOutOfBox(_transform.position, _moleculeGroup.boundBox) && !_isReverse)
+          /*  if (_moleculeGroup.IsOutOfBounds(moleculeTransform.position) && !_isReverse)
             {
-                _transform.eulerAngles = ReverseDirection(_transform.rotation.eulerAngles);
+                moleculeTransform.eulerAngles = ReverseDirection(moleculeTransform.rotation.eulerAngles);
                 _isReverse = true;
                 Debug.Log("Out from box - reversing direction");
             }
             else
             {
-                _isReverse = false; //TODO delete?
-            }
+                if (!_moleculeGroup.IsOutOfBounds(moleculeTransform.position))
+                 _isReverse = false; //TODO delete?
+            } */
             
-            _transform.position += _transform.forward * speedForward;
+            moleculeTransform.position += moleculeTransform.forward * speedForward;
+        }
+
+        private void OnCollisionEnter(Collision other1)
+        {
+            moleculeTransform.eulerAngles = ReverseDirection(moleculeTransform.rotation.eulerAngles);
+            Debug.Log("SDASD");
         }
 
         private IEnumerator MoveToPosition(Vector3 destinationPoint, float time)
         {
             var elapsedTime = 0f;
-            var startingPos = _transform.position;
+            var startingPos = moleculeTransform.position;
             
             while (elapsedTime < time)
             {
-                Move(startingPos, destinationPoint, elapsedTime / time);
+                MoveToPosition(startingPos, destinationPoint, elapsedTime / time);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
@@ -94,15 +112,5 @@ namespace Experiment_5.Scripts
         {
             return direction * -1;
         }
-        
-        private bool IsPositionOutOfBox(Vector3 position, Vector3 boxSize)
-        {
-            if (position.x > boxSize.x / 2 || position.x < -boxSize.x /2) return true;
-            if (position.y > boxSize.y / 2 || position.y < -boxSize.y /2) return true;
-            if (position.z > boxSize.z / 2|| position.z < -boxSize.z /2) return true;
-
-            return false;
-        }
-        
     }
 }
