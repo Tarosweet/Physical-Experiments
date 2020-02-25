@@ -21,9 +21,11 @@ namespace Experiment_6.Scripts
         [SerializeField] private Transform endPoint;
 
         [SerializeField] private VectorExtension.Axis distanceAxis = VectorExtension.Axis.X;
+        [SerializeField] private float distanceMultiplier = 2f;
 
         [SerializeField] private Slider slider;
-
+        [SerializeField] private Text text;
+ 
         [SerializeField] private Debug debug;
     
         private void Update()
@@ -32,6 +34,16 @@ namespace Experiment_6.Scripts
             slider.maxValue = VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis);
 
             slider.value = VectorExtension.GetAxisValueFromVector(target.position, distanceAxis);
+
+            text.text = GetDistance(target.position, startPoint.position).ToString();
+        }
+
+        private float GetDistance(Vector3 a, Vector3 b)
+        {
+            var distance = VectorExtension.GetAxisValueFromVector(a,VectorExtension.Axis.X) 
+                           - VectorExtension.GetAxisValueFromVector(b, distanceAxis);
+            return Mathf.Clamp(distance, 0, VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis) 
+                                            * distanceMultiplier);
         }
 
         private void OnDrawGizmos()
