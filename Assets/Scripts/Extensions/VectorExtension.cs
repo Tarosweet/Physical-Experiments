@@ -46,11 +46,11 @@ namespace Extensions
 
         public static bool IsPassedDistanceInDirection(Vector3 currentPosition, Vector3 lastPosition,Axis axis, float distance)
         {
-            return Mathf.Abs(GetAxisFromVector(currentPosition, axis) - GetAxisFromVector(lastPosition, axis)) >
+            return Mathf.Abs(GetAxisValueFromVector(currentPosition, axis) - GetAxisValueFromVector(lastPosition, axis)) >
                    distance;
         }
 
-        private static float GetAxisFromVector(Vector3 vector, Axis axis)
+        public static float GetAxisValueFromVector(Vector3 vector, Axis axis)
         {
             switch (axis)
             {

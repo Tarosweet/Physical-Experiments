@@ -1,19 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class Cart : MonoBehaviour, IInteractable
+namespace Experiment_6.Scripts
 {
-    [SerializeField] private Rigidbody rigidbody;
-    void Start()
+    [RequireComponent(typeof(Rigidbody))]
+    public class Cart : MonoBehaviour
     {
-        rigidbody = GetComponent<Rigidbody>();
+        [SerializeField] private Vector3 startVelocityVector = Vector3.forward;
+        [SerializeField] private float startForceMultiplier = 1;
+        
+        private Rigidbody rigidbody;
 
-        rigidbody.isKinematic = true;
-    }
+        private void Start()
+        {
+            rigidbody = GetComponent<Rigidbody>();
+        }
 
-    public void Click()
-    {
-        rigidbody.isKinematic = false;
+        private void OnMouseDown()
+        {
+            Starter();
+        }
+
+        private void Starter()
+        {
+            rigidbody.velocity = startVelocityVector * startForceMultiplier;
+        }
     }
 }
