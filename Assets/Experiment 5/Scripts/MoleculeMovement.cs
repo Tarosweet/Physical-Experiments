@@ -92,7 +92,6 @@ namespace Experiment_5.Scripts
         private void OnCollisionEnter(Collision other1)
         {
             moleculeTransform.eulerAngles = ReverseDirection(moleculeTransform.rotation.eulerAngles);
-            Debug.Log("SDASD");
         }
 
         private IEnumerator MoveToPosition(Vector3 destinationPoint, float time)

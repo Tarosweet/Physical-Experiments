@@ -1,19 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-public class ActiveSelf : MonoBehaviour
+namespace Helpers
 {
-    [SerializeField] private GameObject _gameObject;
-
-    private void OnValidate()
+    public class ActiveSelf : MonoBehaviour
     {
-        if (_gameObject == null)
-            _gameObject = gameObject;
-    }
+        [SerializeField] private GameObject _gameObject;
 
-    public void ReverseActive()
-    {
-        _gameObject.SetActive(!_gameObject.activeSelf);
+        private void OnValidate()
+        {
+            if (_gameObject == null)
+                _gameObject = gameObject;
+        }
+
+        public void ReverseActive()
+        {
+            _gameObject.SetActive(!_gameObject.activeSelf);
+        }
     }
 }

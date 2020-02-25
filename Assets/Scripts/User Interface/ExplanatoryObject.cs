@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using Helpers;
 
-namespace Experiments.UI
+namespace User_Interface
 {
-    public class InformationUI : ActiveSelf
+    public class ExplanatoryObject : ActiveSelf
     {
         public void Toggle()
         {

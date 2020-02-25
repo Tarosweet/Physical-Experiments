@@ -3243,6 +3243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nozzle: {fileID: 492246943}
   _atmospherePressure: {fileID: 3009490161253692387}
+  distanceToPump: 0.3
 --- !u!114 &5428177469703944783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3537,6 +3538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InformationButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269290570597071482, guid: 75629805a9d6dda41acadc84bc21c2a3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 8269290570597071483, guid: 75629805a9d6dda41acadc84bc21c2a3,
         type: 3}
