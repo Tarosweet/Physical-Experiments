@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Experiment_6.Scripts
 {
@@ -8,6 +9,8 @@ namespace Experiment_6.Scripts
     {
         [SerializeField] private Vector3 startVelocityVector = Vector3.forward;
         [SerializeField] private float startForceMultiplier = 1;
+
+        [SerializeField] private UnityEvent onStart;
         
         private Rigidbody rigidbody;
 
@@ -24,6 +27,7 @@ namespace Experiment_6.Scripts
         private void Starter()
         {
             rigidbody.velocity = startVelocityVector * startForceMultiplier;
+            onStart?.Invoke();
         }
     }
 }

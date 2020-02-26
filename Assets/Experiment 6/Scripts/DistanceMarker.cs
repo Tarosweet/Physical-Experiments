@@ -1,5 +1,6 @@
 ﻿using System;
 using Extensions;
+using Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,10 @@ namespace Experiment_6.Scripts
             public Color endPointColor;
         }
 
+        public bool isActive;
+
+        public float Distance => slider.value;
+
         [SerializeField] private Transform target;
         
         [SerializeField] private Transform startPoint;
@@ -27,15 +32,33 @@ namespace Experiment_6.Scripts
         [SerializeField] private Text text;
  
         [SerializeField] private Debug debug;
-    
-        private void Update()
+
+        private void Start()
+        {
+            InitializeSliderValues();
+        }
+
+        private void OnValidate()
+        {
+            InitializeSliderValues();
+        }
+
+        private void InitializeSliderValues()
         {
             slider.minValue = VectorExtension.GetAxisValueFromVector(startPoint.position, distanceAxis);
             slider.maxValue = VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis);
+        }
 
+        private void Update()
+        {
+            if (isActive)
+                MoveSlider();
+        }
+
+        private void MoveSlider()
+        {
             slider.value = VectorExtension.GetAxisValueFromVector(target.position, distanceAxis);
-
-            text.text = GetDistance(target.position, startPoint.position).ToString();
+            text.text = GetDistance(target.position, startPoint.position).ToString("F1") + Units.Distance.Meters;
         }
 
         private float GetDistance(Vector3 a, Vector3 b)
