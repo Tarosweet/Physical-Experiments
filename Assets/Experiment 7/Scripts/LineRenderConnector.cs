@@ -1,46 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LineRenderConnector : MonoBehaviour, IInteractable
+namespace Experiment_7.Scripts
 {
-    [SerializeField] private Transform firstConnection;
-    [SerializeField] private Transform secondConnection;
+    [RequireComponent(typeof(LineRenderer))]
+    public class LineRenderConnector : MonoBehaviour, IInteractable
+    {
+        [SerializeField] private Transform firstConnection;
+        [SerializeField] private Transform secondConnection;
 
-    private LineRenderer lineRenderer;
+        [SerializeField] private ElasticPlate elasticPlate;
+        [SerializeField] private NearCartChecker nearCartChecker;
 
-    private ElasticPlate elasticPlate; 
+        private LineRenderer _lineRenderer;
     
-    void Start()
-    {
-        lineRenderer = GetComponent<LineRenderer>();
-
-        elasticPlate = FindObjectOfType<ElasticPlate>();
-    }
-    
-    void Update()
-    {
-        DrawLine();
-    }
-
-    public void Click()
-    {
-        elasticPlate.PlayUnbendAnimation();
-
-        Destroy(gameObject);
-
-        NearCartChecker checker = FindObjectOfType<NearCartChecker>();
-        
-        if (checker)
-            checker.PhysicsSimulation();
-    }
-    
-    private void DrawLine()
-    {
-        if (lineRenderer)
+        private void Start()
         {
-            lineRenderer.SetPosition(0, firstConnection.position);
-            lineRenderer.SetPosition(1, secondConnection.position);
+            _lineRenderer = GetComponent<LineRenderer>();
+        }
+    
+        private void Update()
+        {
+            DrawLine();
+        }
+
+        private void OnMouseDown()
+        {
+            Click();
+            Debug.Log("DSa");
+        }
+
+        public void Click()
+        {
+            elasticPlate.PlayUnbendAnimation();
+
+            Destroy(gameObject);
+            
+            nearCartChecker.PhysicsSimulation();
+        }
+    
+        private void DrawLine()
+        {
+            if (!_lineRenderer) 
+                return;
+            
+            _lineRenderer.SetPosition(0, firstConnection.position);
+            _lineRenderer.SetPosition(1, secondConnection.position);
         }
     }
 }

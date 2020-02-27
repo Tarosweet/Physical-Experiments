@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class Sand : MonoBehaviour
+namespace Experiment_6.Scripts
 {
-
-    public float strength = 0.05f;
+    [RequireComponent(typeof(Collider))]
+    public class Sand : MonoBehaviour
+    {
+        public float strength = 0.05f;
     
-    private void OnTriggerStay(Collider other)
-    {
-        var rigidbodyInSand = other.GetComponent<Rigidbody>();
+        private void OnTriggerStay(Collider other)
+        {
+            var rigidbodyInSand = other.GetComponent<Rigidbody>();
         
-        if (!rigidbodyInSand)
-            return;
+            if (!rigidbodyInSand)
+                return;
         
-        StopRigidbody(rigidbodyInSand);
-    }
+            StopRigidbody(rigidbodyInSand);
+        }
 
-    private void StopRigidbody(Rigidbody rigidbody)
-    {
-        rigidbody.velocity = rigidbody.velocity * strength;
+        private void StopRigidbody(Rigidbody rigidbody)
+        {
+            rigidbody.velocity = rigidbody.velocity * strength;
+        }
     }
 }
