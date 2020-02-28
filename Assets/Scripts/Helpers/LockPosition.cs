@@ -50,8 +50,10 @@ public class LockPosition : MonoBehaviour
     private Vector3 _startPosition;
 
     [SerializeField] private LockedVector lockedPosition;
+    [SerializeField] private bool localPosition;
+    [SerializeField] private bool fixedUpdate = true;
 
-    void Start()
+    private void Start()
     {
         _transform = transform;
 
@@ -63,13 +65,26 @@ public class LockPosition : MonoBehaviour
         _startPosition = transform.position;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        Lock();
+        if (!fixedUpdate)
+            Lock();
+    }
+
+    private void FixedUpdate()
+    {
+        if (fixedUpdate)
+            Lock();
     }
 
     private void Lock()
     {
+        if (localPosition)
+        {
+            _transform.localPosition = LockedPosition();
+            return;
+        }
+        
         _transform.position = LockedPosition();
     }
 
