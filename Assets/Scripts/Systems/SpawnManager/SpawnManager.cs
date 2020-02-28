@@ -10,11 +10,24 @@ namespace Systems.SpawnManager
 
         public Vector3 spawnPoint;
 
-        [SerializeField] private Transform root;
+        [SerializeField] protected bool spawnOnStart;
 
-        public GameObject Spawn(int id)
+        [SerializeField] private Transform root;
+        
+        public void Spawn(int id)
+        {
+            SpawnGameObject(id);
+        }
+        
+        protected GameObject SpawnGameObject(int id)
         {
             return root ? Instantiate(prefabs[id], root) : Instantiate(prefabs[id], spawnPoint, Quaternion.identity);
+        }
+        
+        protected virtual void Start()
+        {
+            if (spawnOnStart)
+                Spawn(0);
         }
 
         private void OnDrawGizmosSelected()

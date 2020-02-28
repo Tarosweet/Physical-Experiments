@@ -9,13 +9,20 @@ namespace Systems.SpawnManager
         public void SpawnReplace(int id)
         {
             Destroy();
-            _currentGameObject = base.Spawn(id);
+            _currentGameObject = base.SpawnGameObject(id);
+        }
+        
+        protected override void Start()
+        {
+            if (spawnOnStart)
+                SpawnReplace(0);
         }
 
-        public void Destroy()
+        private void Destroy()
         {
             if (_currentGameObject)
                 Destroy(_currentGameObject);
         }
+
     }
 }
