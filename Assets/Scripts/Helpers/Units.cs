@@ -13,5 +13,10 @@ namespace Helpers
         {
             public const string Meters = "М";
         }
+        
+        public static class Pressure
+        {
+            public const string Pascal = "Па";
+        }
     }
 }
