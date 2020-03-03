@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 5467349225212879653}
-  _speedDiffuasion: 0.2
-  _maxDiffusion: 1
+  _speedDiffuasion: 0.05
+  _maxDiffusion: 0.4

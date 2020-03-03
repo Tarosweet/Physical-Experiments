@@ -18,6 +18,6 @@ public class IncreaseFluidAction : IFluidAction
     public void Execute()
     {
         Fluid fluid = _fluid;
-        fluid.SetCount(fluid.GetCount() + _count);
+        fluid.IncreaseCount(_count);
     }
 }

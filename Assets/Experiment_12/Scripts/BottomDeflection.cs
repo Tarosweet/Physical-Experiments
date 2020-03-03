@@ -6,8 +6,10 @@ using UnityEngine;
 public class BottomDeflection : MonoBehaviour
 {
     [SerializeField] private Transform _bottomObjectTransform;
+    [SerializeField] private Vector3 _negativePosition;
     [SerializeField] private Vector3 _startPosition;
     [SerializeField] private Vector3 _endPosition;
+    [SerializeField] private Vector3 _negativeScale;
     [SerializeField] private Vector3 _startScale;
     [SerializeField] private Vector3 _endScale;
     [Range(0f,1f)]
@@ -53,8 +55,16 @@ public class BottomDeflection : MonoBehaviour
 
     private void CalculatePercent()
     {
-        SetPosition(_startPosition + (_endPosition - _startPosition) * _percent);
-        SetScale(_startScale + (_endScale - _startScale) * _percent);
+        if (_percent >= 0)
+        {
+            SetPosition(_startPosition + (_endPosition - _startPosition) * _percent);
+            SetScale(_startScale + (_endScale - _startScale) * _percent);
+        }
+        else
+        {
+            SetPosition(_startPosition - (_negativePosition - _startPosition) * _percent);
+            SetScale(_startScale - (_negativeScale - _startScale) * _percent);
+        }
     }
 
     private void CalculateStretching()
@@ -67,19 +77,20 @@ public class BottomDeflection : MonoBehaviour
         {
             if (_container.GetWaterMinLevel() < _interactContainer.GetWaterLevel())
             {
+                float distance = _container.GetWaterLevel() - _container.GetWaterMinLevel(); 
                 if (_container.GetWaterLevel() <= _interactContainer.GetWaterLevel())
                 {
-                    percent = 0f;
+                    distance = _container.GetWaterMaxLevel() - _container.GetWaterMinLevel();
+                    percent = 0 - (_interactContainer.GetWaterLevel() - _container.GetWaterLevel()) / distance;
                 }
                 else
                 {
-                    float distance = _container.GetWaterLevel() - _container.GetWaterMinLevel(); 
                     percent *= (_container.GetWaterLevel() - _interactContainer.GetWaterLevel()) / distance;
                 }
             }
         }
             
-        _percent = Mathf.Clamp(percent, 0, 1);
+        _percent = Mathf.Clamp(percent, -1, 1);
 
         if (_percent > 0f)
         {

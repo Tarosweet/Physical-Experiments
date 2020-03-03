@@ -72,7 +72,7 @@ public class FluidContainer : MonoBehaviour
         rendererMaterial.SetFloatArray("_Heights", floats);
         rendererMaterial.SetColorArray("_Color", colors);
     }
-
+    
     private void SubscribeFluids()
     {
         foreach (var fluid in _fluids)
@@ -82,6 +82,15 @@ public class FluidContainer : MonoBehaviour
         }
     }
 
+    public bool IsFull()
+    {
+        return Math.Abs(_maxLiters - _countLiters) < Mathf.Epsilon;
+    }
+    public float GetWaterRate()
+    {
+        return _maxLiters / CalculateHeight();
+    }
+    
     public float GetMaxLiters()
     {
         return _maxLiters;
@@ -143,6 +152,11 @@ public class FluidContainer : MonoBehaviour
     public float GetWaterMinLevel()
     {
         return _renderer.bounds.min.y;
+    }
+    
+    public float GetWaterMaxLevel()
+    {
+        return _renderer.bounds.max.y;
     }
     
     public float GetLitersFluid()
