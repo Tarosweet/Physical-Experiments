@@ -21,7 +21,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#include "UnityCG.cginc"
-			#include "Assets/WaveformProvider/Shader/Lib/WaveUtil.cginc"
+			#include "Assets/ThirdParty/WaveformProvider/Shader/Lib/WaveUtil.cginc"
 
 			struct appdata
 			{
