@@ -12,11 +12,18 @@ namespace AR
         [SerializeField] private GameObject placementIndicator;
         
         private ARRaycastManager _arRaycastManager;
-        
-        private Pose _placementPose;
-        private bool _placementPoseIsValid = false;
+
+        public Pose PlacementPose
+        {
+            get => _placementPose;
+            set => _placementPose = value;
+        }
+
+        public bool placementPoseIsValid { get; private set; }
         
         private Vector3 center = new Vector3(0.5f,0.5f);
+        private Pose _placementPose;
+
 
         private void Start()
         {
@@ -31,8 +38,8 @@ namespace AR
 
         private void UpdatePlacementIndicator()
         {
-            placementIndicator.SetActive(_placementPoseIsValid);
-            placementIndicator.transform.SetPositionAndRotation(_placementPose.position, _placementPose.rotation);
+            placementIndicator.SetActive(placementPoseIsValid);
+            placementIndicator.transform.SetPositionAndRotation(PlacementPose.position, PlacementPose.rotation);
         }
 
         private void UpdatePlacementPose()
@@ -41,10 +48,14 @@ namespace AR
             var hits = new List<ARRaycastHit>();
             _arRaycastManager.Raycast(screenCenter, hits, TrackableType.Planes);
 
-            _placementPoseIsValid = hits.Count > 0;
-            if (_placementPoseIsValid)
+            placementPoseIsValid = hits.Count > 0;
+            if (placementPoseIsValid)
             {
-                _placementPose = hits[0].pose;
+                PlacementPose = hits[0].pose;
+
+                var cameraForward = Camera.current.transform.forward;
+                var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
+                _placementPose.rotation = Quaternion.LookRotation(cameraBearing);
             }
         }
     }

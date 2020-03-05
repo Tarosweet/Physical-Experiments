@@ -50,8 +50,8 @@ namespace Experiment_6.Scripts
 
         private void InitializeSliderValues()
         {
-                slider.minValue = Mathf.Abs(VectorExtension.GetAxisValueFromVector(startPoint.position, distanceAxis));
-                slider.maxValue = Mathf.Abs(VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis));
+            slider.minValue = 0;
+            slider.maxValue = Mathf.Abs(VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis));
         }
 
         private void Update()
@@ -62,7 +62,7 @@ namespace Experiment_6.Scripts
 
         private void MoveSlider()
         {
-            slider.value =  Mathf.Abs(VectorExtension.GetAxisValueFromVector(target.position, distanceAxis));
+            slider.value =  (VectorExtension.GetAxisValueFromVector(target.position, distanceAxis));
             text.text = GetDistance(target.position, startPoint.position).ToString("F1") + Units.Distance.Meters;
         }
 
@@ -71,8 +71,11 @@ namespace Experiment_6.Scripts
             var distance = VectorExtension.GetAxisValueFromVector(a,VectorExtension.Axis.X) 
                            - VectorExtension.GetAxisValueFromVector(b, distanceAxis);
             if (calculateOneDirection)
-                return Mathf.Clamp(distance, 0, VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis) 
-                                            * distanceMultiplier);
+            {
+                return Mathf.Clamp(distance, 0, VectorExtension.GetAxisValueFromVector(endPoint.position, distanceAxis)
+                                                * distanceMultiplier);
+            }
+
             return Mathf.Abs(distance);
         }
 
