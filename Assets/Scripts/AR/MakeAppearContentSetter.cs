@@ -7,6 +7,9 @@ namespace AR
         [SerializeField] private Transform content;
         private void Start()
         {
+            if (MakeAppearOnPlane.Instance == null)
+                return;
+            
             MakeAppearOnPlane.Instance.content = content;
         }
     }

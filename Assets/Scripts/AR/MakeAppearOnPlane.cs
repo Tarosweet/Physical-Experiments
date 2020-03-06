@@ -67,6 +67,8 @@ namespace AR
             
             m_SessionOrigin = GetComponent<ARSessionOrigin>();
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            
+            MakeAppear();
         }
 
         public void MakeAppear()

@@ -8,6 +8,7 @@ namespace AR
     public class ARScaler : MonoBehaviour
     {
         [SerializeField] private Slider slider;
+        [SerializeField] private Text text;
 
         [SerializeField] private ARSessionOrigin sessionOrigin;
 
@@ -29,6 +30,7 @@ namespace AR
         public void OnSliderValueChanged()
         {
             Scale = slider.value;
+            text.text = Scale.ToString();
         }
 
         private void Initialize()

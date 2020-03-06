@@ -62,7 +62,7 @@ namespace Experiment_6.Scripts
 
         private void MoveSlider()
         {
-            slider.value =  (VectorExtension.GetAxisValueFromVector(target.position, distanceAxis));
+            slider.value =  GetDistance(target.position, startPoint.position);
             text.text = GetDistance(target.position, startPoint.position).ToString("F1") + Units.Distance.Meters;
         }
 
