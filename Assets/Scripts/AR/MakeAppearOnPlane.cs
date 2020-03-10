@@ -86,7 +86,7 @@ namespace AR
             if (m_RaycastManager.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
             {
                 // Raycast hits are sorted by distance, so the first one
-                // will be the closest hit.
+                // will be the closest hit.///
                 var hitPose = s_Hits[0].pose;
 
                 // This does not move the content; instead, it moves and orients the ARSessionOrigin
