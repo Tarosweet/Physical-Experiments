@@ -15,7 +15,7 @@ public class RotatorBase : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawLine(_transform.position -  _transform.forward * 100, _transform.position + _transform.forward * 100, Color.red);
+        //Debug.DrawLine(_transform.position -  _transform.forward * 100, _transform.position + _transform.forward * 100, Color.red);
         if (isPosible)
         {
             if (Input.mouseScrollDelta.y > 0)

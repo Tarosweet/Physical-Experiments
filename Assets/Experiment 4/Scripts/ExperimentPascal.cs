@@ -78,4 +78,16 @@ public class ExperimentPascal : MonoBehaviour, IInteractable
     {
         Play();
     }
+
+    public void OnMouseDown()
+    {
+        if (!_isEnd)
+        {
+            Play();
+        }
+        else
+        {
+            Back();
+        }
+    }
 }

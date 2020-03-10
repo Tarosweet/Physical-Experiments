@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class FluidContainer : MonoBehaviour
@@ -18,6 +19,7 @@ public class FluidContainer : MonoBehaviour
     [SerializeField] private Collider _collider;
     [SerializeField] private List<Fluid> _fluids = new List<Fluid>();
     private float _percentFluid;
+    private Transform _fluidTransform;
     
     private int MAX_COLORS = 15;
 
@@ -30,17 +32,13 @@ public class FluidContainer : MonoBehaviour
     }
     
         
-    public void Update()
+    private void Update()
     {
         ChangeDiffusion();
         //CalculateLiters();
         Filling();
-                
-        Vector3 v = transform.position;
-        v.y = GetWaterLevel();
-        Debug.DrawLine(_renderer.bounds.min, v, Color.magenta);
     }
-
+    
     private void Initialize()
     {
 
@@ -72,7 +70,7 @@ public class FluidContainer : MonoBehaviour
         rendererMaterial.SetFloatArray("_Heights", floats);
         rendererMaterial.SetColorArray("_Color", colors);
     }
-
+    
     private void SubscribeFluids()
     {
         foreach (var fluid in _fluids)
@@ -82,6 +80,15 @@ public class FluidContainer : MonoBehaviour
         }
     }
 
+    public bool IsFull()
+    {
+        return Math.Abs(_maxLiters - _countLiters) < Mathf.Epsilon;
+    }
+    public float GetWaterRate()
+    {
+        return _maxLiters / CalculateHeight();
+    }
+    
     public float GetMaxLiters()
     {
         return _maxLiters;
@@ -127,6 +134,11 @@ public class FluidContainer : MonoBehaviour
         return bounds.max.y - bounds.min.y;
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+    
     public bool CheckWaterLevel(Vector3 positionBottleneck)
     {
         return positionBottleneck.y <= this.GetWaterLevel() && _percentFluid > 0;
@@ -143,6 +155,11 @@ public class FluidContainer : MonoBehaviour
     public float GetWaterMinLevel()
     {
         return _renderer.bounds.min.y;
+    }
+    
+    public float GetWaterMaxLevel()
+    {
+        return _renderer.bounds.max.y;
     }
     
     public float GetLitersFluid()

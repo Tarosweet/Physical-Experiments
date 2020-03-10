@@ -24,4 +24,13 @@ public class FluidInteraction : MonoBehaviour
             deflection.StopInteractWaterLevel();
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        BottomDeflection deflection;
+        if (other.transform.TryGetComponent(out deflection))
+        {
+            deflection.StartInteractWaterLevel(_container);
+        }
+    }
 }

@@ -12,7 +12,7 @@
     {
         Tags {"RenderType"="Transparent" "Queue"="Transparent" "DisableBatching" = "True" "IgnoreProjector" = "True"}
         LOD 100
-        Zwrite off          
+        Zwrite off         
         Blend SrcAlpha OneMinusSrcAlpha
         Cull back // we want the front and back faces
         AlphaToMask off
@@ -102,12 +102,6 @@
          
          fixed4 frag (v2f i, fixed facing : VFACE) : COLOR
          {
-         //_RangeDiffusion[0] = 0;
-         //_RangeDiffusion[1] = 0;
-         //_RangeDiffusion[2] = 0;
-         //_RangeDiffusion[3] = 0;
-         //_RangeDiffusion[4] = 0;
-         //_RangeDiffusion[5] = 0;
            float4 color = CalcColor(i.worldPos.y);
 		   float4 result = step(i.fillEdge, 0.5);
            float4 resultColored = result *  color;

@@ -14,6 +14,9 @@ public class Fluid
     
     [Tooltip("Количество вещества")]
     [SerializeField] private float _count;
+
+    [SerializeField] private bool _infinity;
+    [SerializeField] private bool _nonIncreasable;
     
     [Min(1)]
     [Tooltip("Интенсивность цвета")]
@@ -114,11 +117,36 @@ public class Fluid
     public void IncreaseCount(float count)
     {
         count = Mathf.Abs(count);
-        _count += count;
         
+        if (!_nonIncreasable)
+        {
+            _count += count;
+        }
+
         if (onChangeCount != null) 
             onChangeCount.Invoke();
     }
+    
+    public void DecreaseCount(float count)
+    {
+        count = Mathf.Abs(count);
+        
+        if (!_infinity)
+        {
+            _count -= count;
+        }
+
+        if (onChangeCount != null) 
+            onChangeCount.Invoke();
+        
+        if (_count <= 0)
+        {
+            if(onZeroCount != null)
+                onZeroCount.Invoke(this);
+        }
+    }
+
+    
 
     public float GetDiffusion()
     {

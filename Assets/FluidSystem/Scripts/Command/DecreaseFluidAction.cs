@@ -19,13 +19,6 @@ public class DecreaseFluidAction : IFluidAction
     public void Execute()
     {
         Fluid fluid = _fluid;
-        
-        if (_count >= fluid.GetCount())
-        {
-            fluid.SetCount(0);
-            return;
-        }
-        
-        fluid.SetCount(fluid.GetCount() - _count);
+        fluid.DecreaseCount(_count);
     }
 }
