@@ -14,6 +14,8 @@ public class PouringOut : MonoBehaviour
     
     [SerializeField] private FluidContainer _fluidContainer;
 
+    [SerializeField] private float _gravityScaleEffect = 1000f;
+
     private Transform _pouringObjectTransform;
 
     private PouringEffectParticle _currentPourEffect;
@@ -56,7 +58,7 @@ public class PouringOut : MonoBehaviour
         _currentPourEffect.SetColor(_fluidContainer.GetColor(IsUp()));
         _currentPourEffect.SetPosition(point);
         _currentPourEffect.SetSize(size);
-        _currentPourEffect.SetGravity(_pouringObjectTransform.lossyScale.y/1000.0f);
+        _currentPourEffect.SetGravity(_pouringObjectTransform.lossyScale.y/_gravityScaleEffect);
         RaycastHit hit;
         Physics.Raycast(point, Vector3.down, out hit, Mathf.Infinity);
         Debug.DrawLine(point,  point + Vector3.down * hit.distance, Color.cyan);
