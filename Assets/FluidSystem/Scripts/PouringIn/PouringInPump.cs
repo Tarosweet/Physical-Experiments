@@ -15,12 +15,12 @@ public class PouringInPump : MonoBehaviour
     
     private void OnEnable()
     {
-        _pumpHandle.onHandDown += PourIn;
+        _pumpHandle.onHandUp += PourIn;
     }
 
     private void OnDisable()
     {
-        _pumpHandle.onHandDown -= PourIn;
+        _pumpHandle.onHandUp -= PourIn;
     }
 
     private void PourIn(float percent)
