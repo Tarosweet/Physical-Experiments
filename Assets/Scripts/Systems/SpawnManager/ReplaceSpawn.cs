@@ -18,7 +18,7 @@ namespace Systems.SpawnManager
                 SpawnReplace(0);
         }
 
-        private void Destroy()
+        public void Destroy()
         {
             if (_currentGameObject)
                 Destroy(_currentGameObject);
