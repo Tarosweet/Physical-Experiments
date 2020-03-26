@@ -33,5 +33,6 @@ public class MixingFluidAction : IFluidAction
         fluid.SetTimeToDiffusion(mixing.GetTimeToDiffusion());
         fluid.SetSpeedDiffusion(mixing.GetSpeedDiffusion());
         fluid.SetFinalDiffusion(mixing.GetFinalDiffusion());
+        //fluid.SetMergeAfterDiffusion(mixing.IsMergeAfterDiffusion());
     }
 }

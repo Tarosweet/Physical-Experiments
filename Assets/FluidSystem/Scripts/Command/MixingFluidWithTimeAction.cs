@@ -33,7 +33,8 @@ public class MixingFluidWithTimeAction : IFluidAction
         fluid.SetTimeToDiffusion(newFluid.GetTimeToDiffusion());
         fluid.SetSpeedDiffusion(newFluid.GetSpeedDiffusion());
         fluid.SetFinalDiffusion(newFluid.GetFinalDiffusion());
-        
+        //fluid.SetMergeAfterDiffusion(newFluid.IsMergeAfterDiffusion());
+
         if (!fluid.GetStatusReactionMixing())
         {
             fluid.StartReaction(newFluid);

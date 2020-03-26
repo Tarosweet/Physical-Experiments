@@ -31,6 +31,7 @@ public class MixingFluidWithoutColorAction : IFluidAction
         fluid.SetTimeToDiffusion(mixing.GetTimeToDiffusion());
         fluid.SetSpeedDiffusion(mixing.GetSpeedDiffusion());
         fluid.SetFinalDiffusion(mixing.GetFinalDiffusion());
+        //fluid.SetMergeAfterDiffusion(mixing.IsMergeAfterDiffusion());
         
         if (!fluid.GetStatusReactionMixing())
         {

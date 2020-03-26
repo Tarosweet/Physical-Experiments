@@ -50,6 +50,7 @@ public static class FluidHelper
             ? fluidA.GetFinalDiffusion()
             : fluidB.GetFinalDiffusion();
         f.SetFinalDiffusion(newFinalDiffusion);
+        f.SetMergeAfterDiffusion(fluidA.IsMergeAfterDiffusion() || fluidB.IsMergeAfterDiffusion());
 
         return f;
     }
