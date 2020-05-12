@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 494760496}
   _atmospherePressure: {fileID: 3009490161253692387}
-  lerpDuration: 150
+  lerpDuration: 5000
 --- !u!114 &494760496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,8 +1763,8 @@ Camera:
   m_GameObject: {fileID: 1374895622}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2833,7 +2833,7 @@ MonoBehaviour:
     distanceForAtmosphericPressureToWork: 2.5
     angleForAtmosphericPressureToWork: 0.5
   forceToPress: 100
-  maxPressure: 7000
+  maxPressure: 2800
   force: 0
 --- !u!33 &3105846633073497926
 MeshFilter:
@@ -3326,14 +3326,14 @@ MonoBehaviour:
       min: 0
       max: 0
     y:
-      value: -0.52
+      value: 0.99
       startValue: 0
       isLocked: 1
       clamp: 1
-      min: -0.52
+      min: 0.61
       max: 2
     z:
-      value: 0.53
+      value: -0.01
       startValue: 0
       isLocked: 0
       clamp: 0

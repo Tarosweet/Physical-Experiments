@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attractionDirection: {x: 0, y: -1, z: 0}
-  breakForce: 300
+  breakForce: 1000
 --- !u!54 &616772282
 Rigidbody:
   m_ObjectHideFlags: 0

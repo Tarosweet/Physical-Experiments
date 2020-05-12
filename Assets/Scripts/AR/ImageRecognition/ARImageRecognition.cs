@@ -11,6 +11,7 @@ namespace AR.ImageRecognition
         [SerializeField] private ARTrackedImageManager arTrackedImageManager;
 
         [SerializeField] private StringEvent onImageChanged;
+      //Add transform event [SerializeField] private 
 
         private void OnEnable()
         {
@@ -26,7 +27,12 @@ namespace AR.ImageRecognition
         {
             foreach (var trackedImage in args.added)
             {
-                onImageChanged?.Invoke(trackedImage.name);
+                onImageChanged?.Invoke(trackedImage.name); //args.updated
+            }
+
+            foreach (var trackedImage in args.updated)
+            {
+                
             }
         }
     }

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StencilEffectBounds
-  m_Shader: {fileID: 4800000, guid: ceb8c1139a5d48440bdac2f2987d387b, type: 3}
+  m_Name: 68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f77616c63686b6f2f61725f6d61726b6572732f6d61737465722f706963732f6d61726b65722e706e67
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 184cadb4e4aac33408ea037eb224a94e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 884fc8ce9bd3fcb45be44497a882622e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -61,7 +61,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
