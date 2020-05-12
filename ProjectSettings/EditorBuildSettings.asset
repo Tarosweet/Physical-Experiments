@@ -38,4 +38,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Experiment 16/Experiment 16.unity
     guid: b2b6b0e43a0a1ed4ab2f5b3db9d82c61
+  - enabled: 1
+    path: Assets/Experiment_3/Scene/Scene.unity
+    guid: b035d7657e34ad04b82408a5e7bd7bca
+  - enabled: 1
+    path: Assets/Experiment 15/Scene/Scene.unity
+    guid: b65e820f43bcb914cbe58ab3a29abe1d
+  - enabled: 1
+    path: Assets/Experiment 3/Experiment 3.unity
+    guid: 142669f2e2e6bac4e96436e66ab247ea
+  - enabled: 1
+    path: Assets/Experiment 4/Experiment 4.unity
+    guid: 2420f58ae680e954393501b177270e3a
   m_configObjects: {}
