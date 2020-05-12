@@ -33,9 +33,6 @@ EditorBuildSettings:
     path: Assets/Experiment 10/Experiment 10.unity
     guid: 7d6e4b63164b41545a6655e97f8af9b9
   - enabled: 1
-    path: Assets/Experiment_12/Scene/Scene.unity
-    guid: 0121abb60b59450499e2bde301acc82b
-  - enabled: 1
     path: Assets/Experiment 14/Experiment 14.unity
     guid: ab85fbf88adedc543b214c65da6620a7
   - enabled: 1

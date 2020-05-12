@@ -34,6 +34,11 @@ namespace AR.ImageRecognition
             {
                 
             }
+
+            foreach (var trackedImage in args.updated)
+            {
+                FindObjectOfType<MakeAppearOnPlane>().content.position = trackedImage.transform.position;
+            }
         }
     }
 }
