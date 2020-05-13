@@ -396,6 +396,8 @@ public class Fluid
         clone.SetFinalDiffusion(_finalDiffusion);
         clone.SetTimeToDiffusion(_timeToDiffusion);
         clone.SetSpeedDiffusion(_speedDiffusion);
+        clone.SetMergeAfterDiffusion(_mergeAfterDiffusion);
+        clone.SetSpeedMerge(_speedMerge);
         return clone;
     }
 }

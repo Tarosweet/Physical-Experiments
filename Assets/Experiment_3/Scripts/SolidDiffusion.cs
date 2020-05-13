@@ -14,13 +14,13 @@ public class SolidDiffusion : MonoBehaviour
     public Action OnEndDiffusion;
     public void SetTopColor(Color color)
     {
-        _renderer.material.SetColor("_TopColor", color);
+        _renderer.material.SetColor("_Color2", color);
     }
     
     
     public void SetBottomColor(Color color)
     {
-        _renderer.material.SetColor("_BottomColor", color);
+        _renderer.material.SetColor("_Color1", color);
     }
 
     public void SetDiffusionValue(float value)
