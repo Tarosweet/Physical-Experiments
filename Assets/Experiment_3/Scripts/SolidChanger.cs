@@ -17,8 +17,8 @@ public class SolidChanger : MonoBehaviour
         node.SetRotation(toNode.GetRotation().eulerAngles);
         node.SetPosition(toNode.GetChildPosition() + (node.GetPosition() - node.GetParentPosition()));
         SolidDiffusion solidDiffusion = diffusionGameObject.GetComponent<SolidDiffusion>();
-        solidDiffusion.SetBottomColor(firstSolid.GetTransform().GetComponent<MeshRenderer>().material.GetColor("_TopColor"));
-        solidDiffusion.SetTopColor(secondSolid.GetTransform().GetComponent<MeshRenderer>().material.GetColor("_TopColor"));
+        solidDiffusion.SetBottomColor(firstSolid.GetTransform().GetComponent<MeshRenderer>().material.GetColor("_Color2"));
+        solidDiffusion.SetTopColor(secondSolid.GetTransform().GetComponent<MeshRenderer>().material.GetColor("_Color2"));
         solidDiffusion.SetDiffusionValue(0);
         container.AddNode(node);
         Destroy(firstSolid.gameObject);
