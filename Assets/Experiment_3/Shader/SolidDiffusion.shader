@@ -5,10 +5,11 @@
 
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-Shader "BitshiftProgrammer/Liquid"
+Shader "SolidObject/Diffusion"
 {
      Properties
     {
+        _MainTex ("Texture", 2D) = "white" {}
 		_TopColor ("TopColour", Color) = (1,1,1,1)
         _BottomColor("BottomColor",Color) = (1,1,1,1)
         _Center("Center",Float)= 0.5
@@ -32,21 +33,24 @@ Shader "BitshiftProgrammer/Liquid"
          #pragma fragment frag
          #include "UnityCG.cginc"
  
+         #pragma multi_compile_fog
+         
          struct appdata
          {
            float4 vertex : POSITION;
 		   float3 normal : NORMAL;
-		   float2 uv0: TEXCOORD0;
+		   float2 uv: TEXCOORD0;
          };
  
          struct v2f
          {
-            float4 clipSpacePos:SV_POSITION;
-            float3 localPos:float3;
-            float2 uv0:TEXCOORD0;
-            float3 normal:TEXCOORD1;
-			float3 worldPos:TEXCOORD2;
-			float3 worldNormal:NORMAL;
+            float2 uv : TEXCOORD0;
+            UNITY_FOG_COORDS(1)
+            float4 vertex : SV_POSITION;
+            float4 localPos : float4;
+            float3 normal : NORMAL;
+            float3 worldPos:TEXCOORD2;
+            float3 worldNormal:NORMAL1;
          };
  
          sampler2D _MainTex;
@@ -61,23 +65,23 @@ Shader "BitshiftProgrammer/Liquid"
          v2f vert (appdata v)
          {
             v2f o;
-            o.uv0 = v.uv0;
+            o.uv = v.uv;
             o.normal = v.normal;
-			o.worldPos = mul(unity_ObjectToWorld,v.vertex);
-            o.clipSpacePos = UnityObjectToClipPos(v.vertex);
+            o.worldPos = mul(unity_ObjectToWorld,v.vertex);
+            o.vertex = UnityObjectToClipPos(v.vertex);
             o.localPos = v.vertex;
             o.worldNormal = UnityObjectToWorldNormal(v.normal);
             return o;
          } 
          
-         fixed4 frag (v2f i) : COLOR
+         fixed4 frag (v2f o) : COLOR
          {
             //float4 color = diffusionColor(i.localPos.y);
             float diff = _Diffusion/2;
-            float t = smoothstep(_Center - diff, _Center + diff, i.localPos.y);
+            float t = smoothstep(_Center - diff, _Center + diff, o.localPos.y);
             float3 color = lerp(_BottomColor, _TopColor, t);
             
-            float3 normal = normalize(i.normal);
+            float3 normal = normalize(o.normal);
             
             //Lighting
             float3 lightDir = _WorldSpaceLightPos0.xyz;
@@ -92,7 +96,7 @@ Shader "BitshiftProgrammer/Liquid"
        
             //Direct specular light
             float3 camPos = _WorldSpaceCameraPos;
-            float3 fragToCam = camPos - i.worldPos;
+            float3 fragToCam = camPos - o.worldPos;
             float3 viewDir = normalize(fragToCam);
             float3 viewReflect = reflect(-viewDir, normal);
             float specularFalloff = max(0,dot(viewReflect, lightDir));
@@ -102,8 +106,8 @@ Shader "BitshiftProgrammer/Liquid"
             
             
             //Reflection
-            half3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPos)); //Direction of ray from the camera towards the object surface
-            half3 reflection = reflect(-worldViewDir, i.worldNormal); // Direction of ray after hitting the surface of object
+            half3 worldViewDir = normalize(UnityWorldSpaceViewDir(o.worldPos)); //Direction of ray from the camera towards the object surface
+            half3 reflection = reflect(-worldViewDir, o.worldNormal); // Direction of ray after hitting the surface of object
             /*If Roughness feature is not needed : UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, reflection) can be used instead.
             It chooses the correct LOD value based on camera distance*/
             half4 skyData = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0, reflection, _Roughness); //UNITY_SAMPLE_TEXCUBE_LOD('cubemap', 'sample coordinate', 'map-map level')
