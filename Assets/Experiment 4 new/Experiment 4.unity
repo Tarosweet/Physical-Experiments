@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.3
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 5c41987a269d2664d9d044741ce317b0, type: 2}
@@ -6862,19 +6862,19 @@ MonoBehaviour:
     x:
       value: 0
       startValue: 0
-      isLocked: 0
-      clamp: 0
-      min: 0
-      max: 0
+      isLocked: 1
+      clamp: 1
+      min: -1.18
+      max: 1.93
     y:
-      value: 0
+      value: 5.980676
       startValue: 0
       isLocked: 1
       clamp: 1
       min: 0.8305
       max: 10
     z:
-      value: 0
+      value: -0.07287652
       startValue: 0
       isLocked: 0
       clamp: 0

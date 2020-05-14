@@ -76,5 +76,6 @@ public class ExperimentBalloon : MonoBehaviour, IInteractable
     public void Click()
     {
         Play();
+        Debug.Log("Clicked");
     }
 }

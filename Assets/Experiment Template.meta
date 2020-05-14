@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 660f984975dcf4fb085c69b53534f81d
+=======
+<<<<<<< Updated upstream:Assets/Experiment 4 new/Models.meta
+guid: 66f39b7c0a759c341a19029d6cf9e794
+=======
+guid: 660f984975dcf4fb085c69b53534f81d
+>>>>>>> Stashed changes:Assets/Experiment Template.meta
+>>>>>>> Stashed changes
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
