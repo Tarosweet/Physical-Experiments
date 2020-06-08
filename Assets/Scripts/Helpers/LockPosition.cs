@@ -29,7 +29,7 @@ public class LockPosition : MonoBehaviour
     [Serializable]
     public class LockedVector
     {
-        [SerializeField] private LockedVariable x, y, z;
+        public LockedVariable x, y, z;
 
         public void SetValues(Vector3 vector)
         {
@@ -49,7 +49,7 @@ public class LockPosition : MonoBehaviour
 
     private Vector3 _startPosition;
 
-    [SerializeField] private LockedVector lockedPosition;
+    public LockedVector lockedPosition;
     [SerializeField] private bool localPosition;
     [SerializeField] private bool fixedUpdate = true;
 
