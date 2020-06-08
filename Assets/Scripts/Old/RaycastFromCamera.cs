@@ -8,7 +8,7 @@ public class RaycastFromCamera : MonoBehaviour
 
     void Start()
     {
-        camera = FindObjectOfType<Camera>();
+        camera = GetComponent<Camera>();
     }
 
     void Update()
